@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 
 # ==============================================================================
 # CONFIGURACIÓN GLOBAL
@@ -14,19 +13,17 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Paleta corporativa
-COLOR_PRIMARY = "#1E3A8A"
-COLOR_SECONDARY = "#3B82F6"
-COLOR_ACCENT = "#F59E0B"
+# Paleta corporativa optimizada para alto contraste
+COLOR_PRIMARY = "#3B82F6"
 COLOR_SUCCESS = "#10B981"
+COLOR_WARNING = "#F59E0B"
 COLOR_DANGER = "#EF4444"
-COLOR_BG_CARD = "#1F2937"
-COLOR_BG_LIGHT = "#111827"
+COLOR_INFO = "#6366F1"
 
-# CSS personalizado
+# CSS personalizado optimizado
 st.markdown("""
 <style>
-    /* Header */
+    /* Header y Títulos */
     .main-header {
         font-size: 2.2rem;
         font-weight: 700;
@@ -56,45 +53,42 @@ st.markdown("""
         margin-bottom: 0.5rem;
     }
     
-    /* Cards */
-    .kpi-card {
-        background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
-        border: 1px solid #374151;
-        border-radius: 12px;
-        padding: 1.2rem;
-        height: 100%;
-    }
+    /* Cajas de Información con ALTO CONTRASTE */
     .info-box {
         background-color: #1E3A8A;
-        border-left: 4px solid #3B82F6;
+        border-left: 4px solid #60A5FA;
         padding: 1rem 1.2rem;
         border-radius: 8px;
-        color: #E5E7EB;
+        color: #FFFFFF;
         margin: 1rem 0;
+        font-size: 0.95rem;
     }
     .success-box {
         background-color: #064E3B;
-        border-left: 4px solid #10B981;
+        border-left: 4px solid #34D399;
         padding: 1rem 1.2rem;
         border-radius: 8px;
-        color: #D1FAE5;
+        color: #FFFFFF;
         margin: 1rem 0;
+        font-size: 0.95rem;
     }
     .warning-box {
         background-color: #78350F;
-        border-left: 4px solid #F59E0B;
+        border-left: 4px solid #FBBF24;
         padding: 1rem 1.2rem;
         border-radius: 8px;
-        color: #FEF3C7;
+        color: #FFFFFF;
         margin: 1rem 0;
+        font-size: 0.95rem;
     }
     .danger-box {
         background-color: #7F1D1D;
-        border-left: 4px solid #EF4444;
+        border-left: 4px solid #F87171;
         padding: 1rem 1.2rem;
         border-radius: 8px;
-        color: #FEE2E2;
+        color: #FFFFFF;
         margin: 1rem 0;
+        font-size: 0.95rem;
     }
     
     /* Sidebar */
@@ -107,14 +101,18 @@ st.markdown("""
     /* Metrics */
     [data-testid="stMetricValue"] {
         font-size: 1.8rem !important;
+        color: #FFFFFF !important;
     }
     [data-testid="stMetricDelta"] {
         font-size: 0.85rem !important;
     }
     
-    /* Tables */
+    /* Tablas con scroll horizontal */
     .stDataFrame {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+    }
+    .stDataFrame [data-testid="stHorizontalBlock"] {
+        overflow-x: auto;
     }
     
     /* Footer */
@@ -127,7 +125,7 @@ st.markdown("""
         border-top: 1px solid #374151;
     }
     
-    /* Hide default streamlit elements for cleaner look */
+    /* Ocultar elementos default de Streamlit */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
 </style>
@@ -168,32 +166,32 @@ escenarios = {
     "Pres. Campaña x2": {"Contactos": 419, "Retención": 643.27, "Operación": 38944.28},
 }
 
-# Contrato de Datos (8 tablas)
+# Contrato de Datos (8 tablas) - VERSIÓN COMPACTA PARA MEJOR VISUALIZACIÓN
 data_contrato = [
-    {"Tabla": "clientes", "Origen": "CRM / Sistema de Registro", "Productor": "Marketing y Atención al Cliente", 
-     "Frecuencia": "Diaria (Batch nocturno)", "Acceso": "Data Stewards, Analistas", "Retención": "5 años (Ley 29733)",
-     "Regla": "Campo 'consentimiento_contacto' es fuente de verdad para campañas"},
-    {"Tabla": "actividad", "Origen": "ERP / Logística y Ventas", "Productor": "Operaciones y Logística", 
-     "Frecuencia": "Streaming / Micro-batch (1h)", "Acceso": "Analistas, Finanzas", "Retención": "7 años (SUNAT)",
-     "Regla": "Solo eventos con estado = 'entregado' para métricas de valor"},
-    {"Tabla": "cohortes", "Origen": "Pipeline de Ingeniería de Datos", "Productor": "Data Engineering / Ciencia de Datos", 
-     "Frecuencia": "Mensual (cierre de periodo)", "Acceso": "Científicos de Datos, Analistas de Negocio", 
-     "Retención": "36 meses", "Regla": "Fecha de corte estrictamente anterior a eventos de predicción"},
-    {"Tabla": "operaciones", "Origen": "Sistema de Incidencias y Devoluciones", "Productor": "Control de Calidad y Finanzas", 
-     "Frecuencia": "Diaria", "Acceso": "Auditoría, Jefe de Operaciones", "Retención": "5 años",
-     "Regla": "Montos de reembolso requieren ticket de auditoría"},
-    {"Tabla": "demanda", "Origen": "ERP / Planificación de Ventas", "Productor": "Planificación y Logística", 
-     "Frecuencia": "Semanal", "Acceso": "Analistas de Negocio, Ciencia de Datos", "Retención": "5 años",
-     "Regla": "Registrar solicitado, atendido y faltante por separado"},
-    {"Tabla": "recursos", "Origen": "ERP / Planificación de Recursos", "Productor": "Finanzas y Operaciones", 
-     "Frecuencia": "Mensual", "Acceso": "Gerencia, Analistas de Datos", "Retención": "5 años",
-     "Regla": "Límites, costes y márgenes son fuente de verdad para optimización"},
-    {"Tabla": "politica_actual", "Origen": "Documento de reglas de negocio", "Productor": "Gerencia Comercial", 
-     "Frecuencia": "Anual / Por campaña", "Acceso": "Analistas de Datos, Gerencia", "Retención": "5 años",
-     "Regla": "Debe permitir reconstruir escenario actual sin decisiones manuales ocultas"},
-    {"Tabla": "documentos", "Origen": "Sistema de Gestión Documental", "Productor": "Legal / Control de Calidad", 
-     "Frecuencia": "Por actualización", "Acceso": "Asistente analítico (RAG), Auditoría", 
-     "Retención": "Vigencia + 5 años", "Regla": "Fuente de verdad para el asistente y cumplimiento normativo"},
+    {"Tabla": "clientes", "Origen": "CRM", "Productor": "Marketing", 
+     "Frecuencia": "Diaria", "Acceso": "Data Stewards, Analistas", "Retención": "5 años (Ley 29733)",
+     "Regla": "Campo 'consentimiento_contacto' es fuente de verdad"},
+    {"Tabla": "actividad", "Origen": "ERP Logística", "Productor": "Operaciones", 
+     "Frecuencia": "Streaming (1h)", "Acceso": "Analistas, Finanzas", "Retención": "7 años (SUNAT)",
+     "Regla": "Solo eventos estado='entregado' para métricas"},
+    {"Tabla": "cohortes", "Origen": "Pipeline Datos", "Productor": "Data Engineering", 
+     "Frecuencia": "Mensual", "Acceso": "Científicos de Datos", 
+     "Retención": "36 meses", "Regla": "Fecha corte < eventos de predicción"},
+    {"Tabla": "operaciones", "Origen": "Sistema Incidencias", "Productor": "Control Calidad", 
+     "Frecuencia": "Diaria", "Acceso": "Auditoría, Operaciones", "Retención": "5 años",
+     "Regla": "Reembolsos requieren ticket de auditoría"},
+    {"Tabla": "demanda", "Origen": "ERP Ventas", "Productor": "Planificación", 
+     "Frecuencia": "Semanal", "Acceso": "Analistas, Ciencia de Datos", "Retención": "5 años",
+     "Regla": "Registrar solicitado, atendido y faltante"},
+    {"Tabla": "recursos", "Origen": "ERP Recursos", "Productor": "Finanzas", 
+     "Frecuencia": "Mensual", "Acceso": "Gerencia, Analistas", "Retención": "5 años",
+     "Regla": "Límites y costes para optimización"},
+    {"Tabla": "politica_actual", "Origen": "Reglas de Negocio", "Productor": "Gerencia Comercial", 
+     "Frecuencia": "Anual", "Acceso": "Analistas, Gerencia", "Retención": "5 años",
+     "Regla": "Reconstruir escenario sin decisiones ocultas"},
+    {"Tabla": "documentos", "Origen": "Gestión Documental", "Productor": "Legal", 
+     "Frecuencia": "Por actualización", "Acceso": "Asistente (RAG), Auditoría", 
+     "Retención": "Vigencia + 5 años", "Regla": "Fuente para asistente y cumplimiento"},
 ]
 df_contrato = pd.DataFrame(data_contrato)
 
@@ -430,6 +428,7 @@ elif menu == "🛡️ Gobierno y Procesos":
 
     with tab3:
         st.markdown('<p class="subsection-title">📜 Contrato de Datos y Linaje (8 Tablas)</p>', unsafe_allow_html=True)
+        st.markdown('<p class="sub-header">Desplázate horizontalmente para ver todas las columnas</p>', unsafe_allow_html=True)
         st.dataframe(df_contrato, use_container_width=True, hide_index=True)
 
 # ==============================================================================
