@@ -14,7 +14,7 @@ st.set_page_config(
 )
 
 # ==============================================================================
-# CSS PERSONALIZADO - ESTILO AGRODATA (MINIMALISTA Y PROFESIONAL)
+# CSS PERSONALIZADO - ESTILO AGRODATA CON PALETA AZULINA
 # ==============================================================================
 st.markdown("""
 <style>
@@ -23,14 +23,14 @@ st.markdown("""
         background-color: #FAFAF8;
     }
     
-    /* ===== SIDEBAR ESTILO AGRODATA ===== */
+    /* ===== SIDEBAR ESTILO AGRODATA CON AZUL ===== */
     [data-testid="stSidebar"] {
-        background-color: #1a3a2a !important;
+        background-color: #0f172a !important;
         border-right: none;
     }
     
     [data-testid="stSidebarNav"] {
-        background-color: #1a3a2a !important;
+        background-color: #0f172a !important;
     }
     
     /* Logo y título del sidebar */
@@ -44,22 +44,22 @@ st.markdown("""
     }
     
     .sidebar-logo span {
-        color: #7cb342;
+        color: #3b82f6;
     }
     
     .sidebar-tagline {
-        color: #8fbc8f;
+        color: #93c5fd;
         font-size: 9px;
         letter-spacing: 3px;
         text-transform: uppercase;
         padding: 0 18px 18px;
-        border-bottom: 1px solid #2d5a3d;
+        border-bottom: 1px solid #1e3a8a;
         margin-bottom: 18px;
     }
     
     /* Caja del observatorio */
     .observatory-box {
-        background-color: #234a35;
+        background-color: #1e3a8a;
         border-radius: 10px;
         padding: 12px 14px;
         margin: 0 14px 18px;
@@ -79,13 +79,13 @@ st.markdown("""
     }
     
     .observatory-sub {
-        color: #8fbc8f;
+        color: #93c5fd;
         font-size: 10px;
     }
     
     /* Títulos de sección */
     .section-title {
-        color: #8fbc8f;
+        color: #93c5fd;
         font-size: 9px;
         letter-spacing: 2.5px;
         text-transform: uppercase;
@@ -93,32 +93,36 @@ st.markdown("""
         font-weight: 600;
     }
     
-    /* Items de navegación */
-    .nav-item {
+    /* Botones de navegación estilo Agrodata */
+    .nav-button {
         display: flex;
         align-items: center;
+        width: 100%;
         padding: 10px 14px;
         margin: 2px 10px;
         border-radius: 8px;
-        color: #c8e6c9;
-        text-decoration: none;
+        background-color: transparent;
+        border: none;
+        color: #bfdbfe;
+        text-align: left;
         font-size: 14px;
         cursor: pointer;
         transition: all 0.2s;
+        font-family: inherit;
     }
     
-    .nav-item:hover {
-        background-color: #2d5a3d;
+    .nav-button:hover {
+        background-color: #1e3a8a;
         color: #ffffff;
     }
     
-    .nav-item.active {
-        background-color: #7cb342;
+    .nav-button.active {
+        background-color: #3b82f6;
         color: #ffffff;
         font-weight: 600;
     }
     
-    .nav-item.active::after {
+    .nav-button.active::after {
         content: "●";
         margin-left: auto;
         color: #ffffff;
@@ -132,7 +136,7 @@ st.markdown("""
     
     /* Card del modelo */
     .model-card {
-        background: linear-gradient(135deg, #2d5a3d 0%, #1a3a2a 100%);
+        background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
         border-radius: 12px;
         padding: 14px;
         margin: 18px 14px;
@@ -142,7 +146,7 @@ st.markdown("""
     .model-card-image {
         width: 100%;
         height: 110px;
-        background: linear-gradient(135deg, #4a7c59 0%, #8fbc8f 100%);
+        background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
         border-radius: 8px;
         margin-bottom: 12px;
         display: flex;
@@ -152,7 +156,7 @@ st.markdown("""
     }
     
     .model-label {
-        color: #7cb342;
+        color: #60a5fa;
         font-size: 9px;
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -167,13 +171,13 @@ st.markdown("""
     }
     
     .model-desc {
-        color: #c8e6c9;
+        color: #bfdbfe;
         font-size: 11px;
         line-height: 1.4;
     }
     
     .model-horizon {
-        color: #7cb342;
+        color: #60a5fa;
         font-size: 11px;
         margin-top: 8px;
         display: flex;
@@ -187,7 +191,7 @@ st.markdown("""
         align-items: center;
         padding: 14px;
         margin-top: 20px;
-        border-top: 1px solid #2d5a3d;
+        border-top: 1px solid #1e3a8a;
         gap: 10px;
     }
     
@@ -195,7 +199,7 @@ st.markdown("""
         width: 34px;
         height: 34px;
         border-radius: 50%;
-        background-color: #7cb342;
+        background-color: #3b82f6;
         color: #ffffff;
         display: flex;
         align-items: center;
@@ -211,7 +215,7 @@ st.markdown("""
     }
     
     .user-role {
-        color: #8fbc8f;
+        color: #93c5fd;
         font-size: 10px;
     }
     
@@ -288,51 +292,50 @@ st.markdown("""
     }
     
     .kpi-delta.positive {
-        color: #2e7d32;
+        color: #059669;
     }
     
     .kpi-delta.negative {
-        color: #c62828;
+        color: #dc2626;
     }
     
-    /* Cajas de información minimalistas */
+    /* Cajas de información con buen contraste */
     .info-box {
-        background-color: #ffffff;
-        border-left: 3px solid #7cb342;
+        background-color: #eff6ff;
+        border-left: 3px solid #3b82f6;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #1a1a1a;
+        color: #1e3a8a;
         margin: 16px 0;
         font-size: 14px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
     
     .success-box {
-        background-color: #f1f8e9;
-        border-left: 3px solid #2e7d32;
+        background-color: #f0fdf4;
+        border-left: 3px solid #059669;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #1a1a1a;
+        color: #064e3b;
         margin: 16px 0;
         font-size: 14px;
     }
     
     .warning-box {
-        background-color: #fff8e1;
-        border-left: 3px solid #f57c00;
+        background-color: #fffbeb;
+        border-left: 3px solid #d97706;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #1a1a1a;
+        color: #78350f;
         margin: 16px 0;
         font-size: 14px;
     }
     
     .danger-box {
-        background-color: #ffebee;
-        border-left: 3px solid #c62828;
+        background-color: #fef2f2;
+        border-left: 3px solid #dc2626;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #1a1a1a;
+        color: #7f1d1d;
         margin: 16px 0;
         font-size: 14px;
     }
@@ -350,8 +353,8 @@ st.markdown("""
     }
     
     .stTabs [aria-selected="true"] {
-        color: #1a3a2a !important;
-        border-bottom: 2px solid #7cb342 !important;
+        color: #1e3a8a !important;
+        border-bottom: 2px solid #3b82f6 !important;
     }
     
     /* Tablas minimalistas */
@@ -363,6 +366,11 @@ st.markdown("""
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     .stDeployButton {display:none;}
+    
+    /* Ocultar el radio button nativo pero mantener funcionalidad */
+    [data-testid="stRadio"] {
+        display: none !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -427,7 +435,23 @@ data_contrato = [
 df_contrato = pd.DataFrame(data_contrato)
 
 # ==============================================================================
-# SIDEBAR ESTILO AGRODATA
+# NAVEGACIÓN FUNCIONAL CON st.session_state
+# ==============================================================================
+# Inicializar la página activa si no existe
+if 'pagina' not in st.session_state:
+    st.session_state.pagina = "Resumen"
+
+# Lista de páginas con sus íconos
+paginas = {
+    "Resumen": "📊",
+    "Pronóstico de Demanda": "📈",
+    "Optimización y Escenarios": "⚖️",
+    "Gobierno y Procesos": "🛡️",
+    "Asistente Analítico": "🤖"
+}
+
+# ==============================================================================
+# SIDEBAR ESTILO AGRODATA CON NAVEGACIÓN FUNCIONAL
 # ==============================================================================
 with st.sidebar:
     # Logo y tagline
@@ -448,35 +472,20 @@ with st.sidebar:
     # Sección: PLATAFORMA
     st.markdown('<div class="section-title">Plataforma</div>', unsafe_allow_html=True)
     
-    # Navegación con st.radio (oculto) + HTML personalizado
-    pagina = st.radio(
-        "Navegación",
-        ["Resumen", "Pronóstico de Demanda", "Optimización y Escenarios", 
-         "Gobierno y Procesos", "Asistente Analítico"],
-        label_visibility="collapsed",
-        index=0
-    )
-    
-    # Mapeo de íconos
-    iconos = {
-        "Resumen": "📊",
-        "Pronóstico de Demanda": "📈",
-        "Optimización y Escenarios": "⚖️",
-        "Gobierno y Procesos": "🛡️",
-        "Asistente Analítico": "🤖"
-    }
-    
-    # Renderizar items de navegación
-    for item in ["Resumen", "Pronóstico de Demanda", "Optimización y Escenarios", 
-                 "Gobierno y Procesos", "Asistente Analítico"]:
-        active_class = "active" if (item == pagina) else ""
-        icon = iconos.get(item, "📄")
-        st.markdown(f"""
-            <div class="nav-item {active_class}">
-                <span class="nav-icon">{icon}</span>
-                <span>{item}</span>
-            </div>
-        """, unsafe_allow_html=True)
+    # Botones de navegación funcionales
+    for nombre_pagina, icono in paginas.items():
+        es_activa = st.session_state.pagina == nombre_pagina
+        clase_activa = "active" if es_activa else ""
+        
+        # Crear un botón que cambia el estado
+        if st.button(
+            f"{icono} {nombre_pagina}",
+            key=f"nav_{nombre_pagina}",
+            use_container_width=True,
+            type="secondary" if not es_activa else "primary"
+        ):
+            st.session_state.pagina = nombre_pagina
+            st.rerun()
     
     # Sección: MODELO DE REFERENCIA
     st.markdown('<div class="section-title">Modelo de referencia</div>', unsafe_allow_html=True)
@@ -520,9 +529,14 @@ st.markdown('</div>', unsafe_allow_html=True)
 st.divider()
 
 # ==============================================================================
-# PESTAÑA 1: RESUMEN EJECUTIVO
+# CONTENIDO DINÁMICO SEGÚN LA PÁGINA SELECCIONADA
 # ==============================================================================
-if pagina == "Resumen":
+pagina_actual = st.session_state.pagina
+
+# ==============================================================================
+# PÁGINA 1: RESUMEN EJECUTIVO
+# ==============================================================================
+if pagina_actual == "Resumen":
     st.markdown('<div class="subsection-heading">Resultados de la Decisión Óptima</div>', unsafe_allow_html=True)
     st.markdown('<h2 class="section-heading">Noviembre 2026</h2>', unsafe_allow_html=True)
     
@@ -577,9 +591,9 @@ if pagina == "Resumen":
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ==============================================================================
-# PESTAÑA 2: PRONÓSTICO DE DEMANDA
+# PÁGINA 2: PRONÓSTICO DE DEMANDA
 # ==============================================================================
-elif pagina == "Pronóstico de Demanda":
+elif pagina_actual == "Pronóstico de Demanda":
     st.markdown('<div class="subsection-heading">Modelo estadístico con estacionalidad de 52 semanas</div>', unsafe_allow_html=True)
     st.markdown('<h2 class="section-heading">Pronóstico Holt-Winters · Próximas 4 Semanas</h2>', unsafe_allow_html=True)
     
@@ -633,9 +647,9 @@ elif pagina == "Pronóstico de Demanda":
     st.dataframe(df_pronostico_display, use_container_width=True, hide_index=True)
 
 # ==============================================================================
-# PESTAÑA 3: OPTIMIZACIÓN Y ESCENARIOS
+# PÁGINA 3: OPTIMIZACIÓN Y ESCENARIOS
 # ==============================================================================
-elif pagina == "Optimización y Escenarios":
+elif pagina_actual == "Optimización y Escenarios":
     st.markdown('<h2 class="section-heading">Política Actual vs. Solución Óptima PuLP</h2>', unsafe_allow_html=True)
     
     df_comp_display = df_comparacion.copy()
@@ -700,9 +714,9 @@ elif pagina == "Optimización y Escenarios":
     st.dataframe(df_escenarios, use_container_width=True, hide_index=True)
 
 # ==============================================================================
-# PESTAÑA 4: GOBIERNO Y PROCESOS
+# PÁGINA 4: GOBIERNO Y PROCESOS
 # ==============================================================================
-elif pagina == "Gobierno y Procesos":
+elif pagina_actual == "Gobierno y Procesos":
     st.markdown('<h2 class="section-heading">Control, Cumplimiento y Explicabilidad</h2>', unsafe_allow_html=True)
     
     tab1, tab2, tab3 = st.tabs(["📉 Carta de Control", "🔒 Auditoría de Consentimiento", "📜 Contrato de Datos"])
@@ -793,9 +807,9 @@ elif pagina == "Gobierno y Procesos":
         )
 
 # ==============================================================================
-# PESTAÑA 5: ASISTENTE ANALÍTICO
+# PÁGINA 5: ASISTENTE ANALÍTICO
 # ==============================================================================
-elif pagina == "Asistente Analítico":
+elif pagina_actual == "Asistente Analítico":
     st.markdown('<h2 class="section-heading">Evaluación del Asistente Text-to-SQL</h2>', unsafe_allow_html=True)
     st.markdown('<p style="color: #666; font-size: 14px;">El asistente opera en modo solo lectura con un validador de seguridad que bloquea instrucciones como <code>DROP</code>, <code>DELETE</code> o <code>UPDATE</code>.</p>', unsafe_allow_html=True)
     
