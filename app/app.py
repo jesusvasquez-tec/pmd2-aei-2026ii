@@ -7,117 +7,362 @@ import plotly.graph_objects as go
 # CONFIGURACIÓN GLOBAL
 # ==============================================================================
 st.set_page_config(
-    page_title="AndeHogar · Dashboard Gerencial",
+    page_title="AndeHogar · Panel de Decisión Gerencial",
     page_icon="🏠",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# CSS personalizado optimizado para alto contraste y estética profesional
+# ==============================================================================
+# CSS PERSONALIZADO - ESTILO AGRODATA (MINIMALISTA Y PROFESIONAL)
+# ==============================================================================
 st.markdown("""
 <style>
-    /* Header y Títulos */
-    .main-header {
-        font-size: 2.2rem;
+    /* ===== FONDO GENERAL ===== */
+    .stApp {
+        background-color: #FAFAF8;
+    }
+    
+    /* ===== SIDEBAR ESTILO AGRODATA ===== */
+    [data-testid="stSidebar"] {
+        background-color: #1a3a2a !important;
+        border-right: none;
+    }
+    
+    [data-testid="stSidebarNav"] {
+        background-color: #1a3a2a !important;
+    }
+    
+    /* Logo y título del sidebar */
+    .sidebar-logo {
+        color: #ffffff;
+        font-size: 26px;
         font-weight: 700;
-        color: #FFFFFF;
-        margin-bottom: 0.3rem;
+        margin-bottom: 2px;
+        padding: 20px 18px 0;
+        letter-spacing: -0.5px;
     }
-    .sub-header {
-        font-size: 1rem;
-        color: #9CA3AF;
-        margin-bottom: 1.5rem;
-        font-weight: 400;
+    
+    .sidebar-logo span {
+        color: #7cb342;
     }
+    
+    .sidebar-tagline {
+        color: #8fbc8f;
+        font-size: 9px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        padding: 0 18px 18px;
+        border-bottom: 1px solid #2d5a3d;
+        margin-bottom: 18px;
+    }
+    
+    /* Caja del observatorio */
+    .observatory-box {
+        background-color: #234a35;
+        border-radius: 10px;
+        padding: 12px 14px;
+        margin: 0 14px 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .observatory-icon {
+        font-size: 22px;
+    }
+    
+    .observatory-text {
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 600;
+    }
+    
+    .observatory-sub {
+        color: #8fbc8f;
+        font-size: 10px;
+    }
+    
+    /* Títulos de sección */
     .section-title {
-        font-size: 1.5rem;
+        color: #8fbc8f;
+        font-size: 9px;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        padding: 14px 14px 6px;
         font-weight: 600;
-        color: #FFFFFF;
-        margin-top: 1.5rem;
-        margin-bottom: 1rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 2px solid #374151;
-    }
-    .subsection-title {
-        font-size: 1.15rem;
-        font-weight: 600;
-        color: #E5E7EB;
-        margin-top: 1rem;
-        margin-bottom: 0.5rem;
     }
     
-    /* Cajas de Información con ALTO CONTRASTE */
+    /* Items de navegación */
+    .nav-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 14px;
+        margin: 2px 10px;
+        border-radius: 8px;
+        color: #c8e6c9;
+        text-decoration: none;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .nav-item:hover {
+        background-color: #2d5a3d;
+        color: #ffffff;
+    }
+    
+    .nav-item.active {
+        background-color: #7cb342;
+        color: #ffffff;
+        font-weight: 600;
+    }
+    
+    .nav-item.active::after {
+        content: "●";
+        margin-left: auto;
+        color: #ffffff;
+        font-size: 9px;
+    }
+    
+    .nav-icon {
+        margin-right: 10px;
+        font-size: 15px;
+    }
+    
+    /* Card del modelo */
+    .model-card {
+        background: linear-gradient(135deg, #2d5a3d 0%, #1a3a2a 100%);
+        border-radius: 12px;
+        padding: 14px;
+        margin: 18px 14px;
+        overflow: hidden;
+    }
+    
+    .model-card-image {
+        width: 100%;
+        height: 110px;
+        background: linear-gradient(135deg, #4a7c59 0%, #8fbc8f 100%);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+    }
+    
+    .model-label {
+        color: #7cb342;
+        font-size: 9px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+    }
+    
+    .model-name {
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+    
+    .model-desc {
+        color: #c8e6c9;
+        font-size: 11px;
+        line-height: 1.4;
+    }
+    
+    .model-horizon {
+        color: #7cb342;
+        font-size: 11px;
+        margin-top: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* Perfil de usuario */
+    .user-profile {
+        display: flex;
+        align-items: center;
+        padding: 14px;
+        margin-top: 20px;
+        border-top: 1px solid #2d5a3d;
+        gap: 10px;
+    }
+    
+    .user-avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background-color: #7cb342;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+    }
+    
+    .user-name {
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 600;
+    }
+    
+    .user-role {
+        color: #8fbc8f;
+        font-size: 10px;
+    }
+    
+    /* ===== CONTENIDO PRINCIPAL ===== */
+    .main-title {
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 38px;
+        font-weight: 400;
+        color: #1a1a1a;
+        margin-bottom: 8px;
+        letter-spacing: -0.5px;
+    }
+    
+    .main-subtitle {
+        font-size: 15px;
+        color: #666666;
+        margin-bottom: 28px;
+        font-weight: 300;
+    }
+    
+    .section-heading {
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 22px;
+        font-weight: 400;
+        color: #1a1a1a;
+        margin: 24px 0 12px;
+        letter-spacing: -0.3px;
+    }
+    
+    .subsection-heading {
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #666666;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+    
+    /* Tarjetas KPI estilo Agrodata */
+    .kpi-card {
+        background-color: #ffffff;
+        border: 1px solid #e8e8e4;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    
+    .kpi-label {
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: #888888;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+    
+    .kpi-value {
+        font-size: 32px;
+        font-weight: 300;
+        color: #1a1a1a;
+        margin-bottom: 4px;
+        letter-spacing: -1px;
+    }
+    
+    .kpi-unit {
+        font-size: 14px;
+        color: #888888;
+        font-weight: 300;
+    }
+    
+    .kpi-delta {
+        font-size: 12px;
+        margin-top: 6px;
+    }
+    
+    .kpi-delta.positive {
+        color: #2e7d32;
+    }
+    
+    .kpi-delta.negative {
+        color: #c62828;
+    }
+    
+    /* Cajas de información minimalistas */
     .info-box {
-        background-color: #1E3A8A;
-        border-left: 4px solid #60A5FA;
-        padding: 1rem 1.2rem;
-        border-radius: 8px;
-        color: #FFFFFF;
-        margin: 1rem 0;
-        font-size: 0.95rem;
+        background-color: #ffffff;
+        border-left: 3px solid #7cb342;
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+        color: #1a1a1a;
+        margin: 16px 0;
+        font-size: 14px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
+    
     .success-box {
-        background-color: #064E3B;
-        border-left: 4px solid #34D399;
-        padding: 1rem 1.2rem;
-        border-radius: 8px;
-        color: #FFFFFF;
-        margin: 1rem 0;
-        font-size: 0.95rem;
+        background-color: #f1f8e9;
+        border-left: 3px solid #2e7d32;
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+        color: #1a1a1a;
+        margin: 16px 0;
+        font-size: 14px;
     }
+    
     .warning-box {
-        background-color: #78350F;
-        border-left: 4px solid #FBBF24;
-        padding: 1rem 1.2rem;
-        border-radius: 8px;
-        color: #FFFFFF;
-        margin: 1rem 0;
-        font-size: 0.95rem;
+        background-color: #fff8e1;
+        border-left: 3px solid #f57c00;
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+        color: #1a1a1a;
+        margin: 16px 0;
+        font-size: 14px;
     }
+    
     .danger-box {
-        background-color: #7F1D1D;
-        border-left: 4px solid #F87171;
-        padding: 1rem 1.2rem;
-        border-radius: 8px;
-        color: #FFFFFF;
-        margin: 1rem 0;
-        font-size: 0.95rem;
+        background-color: #ffebee;
+        border-left: 3px solid #c62828;
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+        color: #1a1a1a;
+        margin: 16px 0;
+        font-size: 14px;
     }
     
-    /* Sidebar */
-    .sidebar-text {
-        color: #D1D5DB;
-        font-size: 0.9rem;
-        line-height: 1.5;
+    /* Tabs personalizados */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 24px;
+        border-bottom: 1px solid #e8e8e4;
     }
     
-    /* Metrics */
-    [data-testid="stMetricValue"] {
-        font-size: 1.8rem !important;
-        color: #FFFFFF !important;
-    }
-    [data-testid="stMetricDelta"] {
-        font-size: 0.85rem !important;
+    .stTabs [data-baseweb="tab"] {
+        color: #666666;
+        font-size: 14px;
+        padding: 12px 4px;
     }
     
-    /* Tablas */
-    .stDataFrame {
-        font-size: 0.85rem;
+    .stTabs [aria-selected="true"] {
+        color: #1a3a2a !important;
+        border-bottom: 2px solid #7cb342 !important;
     }
     
-    /* Footer */
-    .footer {
-        text-align: center;
-        color: #6B7280;
-        font-size: 0.8rem;
-        margin-top: 3rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid #374151;
+    /* Tablas minimalistas */
+    .dataframe {
+        font-size: 13px !important;
     }
     
-    /* Ocultar elementos default de Streamlit */
+    /* Ocultar elementos default */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
+    .stDeployButton {display:none;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -126,7 +371,6 @@ st.markdown("""
 # ==============================================================================
 FECHA_ACTUALIZACION = "2026-11-08"
 
-# Pronóstico Holt-Winters (Semana 10)
 data_pronostico = {
     "Familia": ["Cocina menor", "Electrodomésticos pequeños", "Organización", 
                 "Textiles hogar", "Iluminación", "Limpieza hogar"],
@@ -134,9 +378,8 @@ data_pronostico = {
     "Margen Unitario (S/)": [40.49, 75.54, 31.67, 36.56, 29.21, 21.86]
 }
 df_pronostico = pd.DataFrame(data_pronostico)
-TOTAL_PRONOSTICO = df_pronostico["Pronóstico 4S (Und.)"].sum()  # 1,336
+TOTAL_PRONOSTICO = df_pronostico["Pronóstico 4S (Und.)"].sum()
 
-# Comparación Política Actual vs Óptima (Semana 11)
 data_comparacion = [
     {"Métrica": "Contactos WhatsApp", "Política Actual": 600, "Solución Óptima": 418, "Unidad": "contactos"},
     {"Métrica": "Contactos Llamada", "Política Actual": 0, "Solución Óptima": 0, "Unidad": "contactos"},
@@ -146,7 +389,6 @@ data_comparacion = [
 ]
 df_comparacion = pd.DataFrame(data_comparacion)
 
-# Escenarios de Sensibilidad
 escenarios = {
     "Efecto 0% (Pesimista)": {"Contactos": 0, "Retención": 0.00, "Operación": 38944.28},
     "Efecto 5% (Base)": {"Contactos": 419, "Retención": 643.27, "Operación": 38944.28},
@@ -156,7 +398,6 @@ escenarios = {
     "Pres. Campaña x2": {"Contactos": 419, "Retención": 643.27, "Operación": 38944.28},
 }
 
-# Contrato de Datos (8 tablas) - VERSIÓN COMPACTA PARA MEJOR VISUALIZACIÓN
 data_contrato = [
     {"Tabla": "clientes", "Origen": "CRM", "Productor": "Marketing", "Frecuencia": "Diaria", 
      "Acceso": "Data Stewards", "Retención": "5 años (Ley 29733)",
@@ -186,52 +427,141 @@ data_contrato = [
 df_contrato = pd.DataFrame(data_contrato)
 
 # ==============================================================================
-# HEADER
+# SIDEBAR ESTILO AGRODATA
 # ==============================================================================
-st.markdown('<p class="main-header">🏠 AndeHogar · Panel de Decisión Gerencial</p>', unsafe_allow_html=True)
-st.markdown(f'<p class="sub-header">Optimización de Retención y Cadena de Suministro · Noviembre 2026 · Actualizado: {FECHA_ACTUALIZACION}</p>', unsafe_allow_html=True)
-
-# Sidebar
 with st.sidebar:
-    st.markdown("### ⚙️ Configuración")
-    st.markdown('<p class="sidebar-text">Todas las cifras están expresadas en Soles (S/) y unidades físicas, sincronizadas con el modelo de optimización PuLP del notebook de Colab.</p>', unsafe_allow_html=True)
-    st.divider()
-    menu = st.radio(
+    # Logo y tagline
+    st.markdown('<div class="sidebar-logo">🏠 Ande<span>Hogar</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-tagline">Inteligencia Comercial</div>', unsafe_allow_html=True)
+    
+    # Caja del observatorio
+    st.markdown("""
+        <div class="observatory-box">
+            <span class="observatory-icon">📊</span>
+            <div>
+                <div class="observatory-text">Panel de decisión</div>
+                <div class="observatory-sub">Perú · Noviembre 2026</div>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Sección: PLATAFORMA
+    st.markdown('<div class="section-title">Plataforma</div>', unsafe_allow_html=True)
+    
+    # Navegación con st.radio (oculto) + HTML personalizado
+    pagina = st.radio(
         "Navegación",
-        ["📊 Resumen Ejecutivo", "📈 Pronóstico de Demanda", "⚖️ Optimización y Escenarios", 
-         "🛡️ Gobierno y Procesos", "🤖 Asistente Analítico"],
-        label_visibility="collapsed"
+        ["Resumen", "Pronóstico de Demanda", "Optimización y Escenarios", 
+         "Gobierno y Procesos", "Asistente Analítico"],
+        label_visibility="collapsed",
+        index=0
     )
+    
+    # Mapeo de íconos
+    iconos = {
+        "Resumen": "📊",
+        "Pronóstico de Demanda": "📈",
+        "Optimización y Escenarios": "⚖️",
+        "Gobierno y Procesos": "🛡️",
+        "Asistente Analítico": "🤖"
+    }
+    
+    # Renderizar items de navegación
+    for item in ["Resumen", "Pronóstico de Demanda", "Optimización y Escenarios", 
+                 "Gobierno y Procesos", "Asistente Analítico"]:
+        active_class = "active" if (item == pagina) else ""
+        icon = iconos.get(item, "📄")
+        st.markdown(f"""
+            <div class="nav-item {active_class}">
+                <span class="nav-icon">{icon}</span>
+                <span>{item}</span>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    # Sección: MODELO DE REFERENCIA
+    st.markdown('<div class="section-title">Modelo de referencia</div>', unsafe_allow_html=True)
+    
+    # Card del modelo
+    st.markdown("""
+        <div class="model-card">
+            <div class="model-card-image">🏠</div>
+            <div class="model-label">Modelo prescriptivo</div>
+            <div class="model-name">PuLP + Holt-Winters</div>
+            <div class="model-desc">
+                Optimización de retención y cadena de suministro con horizonte dual.
+            </div>
+            <div class="model-horizon">
+                <span>Horizonte 2026</span>
+                <span>→</span>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Perfil de usuario
+    st.markdown("""
+        <div class="user-profile">
+            <div class="user-avatar">J</div>
+            <div>
+                <div class="user-name">Jesus</div>
+                <div class="user-role">Analista · Perú</div>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+# ==============================================================================
+# HEADER PRINCIPAL
+# ==============================================================================
+st.markdown('<div style="padding: 20px 0;">', unsafe_allow_html=True)
+st.markdown('<div style="font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #888888; font-weight: 600; margin-bottom: 8px;">Bienvenido a tu panel de decisión</div>', unsafe_allow_html=True)
+st.markdown('<h1 class="main-title">Tu negocio, en perspectiva.</h1>', unsafe_allow_html=True)
+st.markdown(f'<p class="main-subtitle">Explora el pasado. Anticipa la demanda. Decide con perspectiva. · Actualizado: {FECHA_ACTUALIZACION}</p>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 st.divider()
 
 # ==============================================================================
 # PESTAÑA 1: RESUMEN EJECUTIVO
 # ==============================================================================
-if menu == "📊 Resumen Ejecutivo":
-    st.markdown('<p class="section-title">Resultados de la Decisión Óptima para Noviembre 2026</p>', unsafe_allow_html=True)
+if pagina == "Resumen":
+    st.markdown('<div class="subsection-heading">Resultados de la Decisión Óptima</div>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-heading">Noviembre 2026</h2>', unsafe_allow_html=True)
     
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric("Mejora en Operación (4s)", "+12.0%", "S/ 3,594.84 adicionales", delta_color="normal")
+        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-label">Mejora en Operación (4s)</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-value">+12.0%</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-delta positive">↑ S/ 3,594.84 adicionales</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
     with col2:
-        st.metric("Contactos WhatsApp", "418", "vs 600 de la política original (-30.3%)", delta_color="inverse")
+        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-label">Contactos WhatsApp</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-value">418</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-delta negative">↑ vs 600 de la política original</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
     with col3:
-        st.metric("Unidades a Reponer", "1,333", "Respetando tope de almacén (800 u.)", delta_color="off")
+        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-label">Unidades a Reponer</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-value">1,333</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-delta" style="color: #666;">↑ Respetando tope de almacén</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
     with col4:
-        st.metric("Riesgo Legal", "0 clientes", "Sin consentimiento contactados", delta_color="normal")
+        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-label">Riesgo Legal</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-value">0</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-delta positive">↑ Sin consentimiento contactados</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('<div class="success-box">', unsafe_allow_html=True)
     st.markdown("""
-    💡 **Hallazgo Gerencial Clave:** La política actual de contactar a los primeros 600 clientes por ID es **infactible** 
-    (excede el almacén en 83 unidades y el presupuesto de compra en S/ 888). Además, intentaba contactar a **50 clientes 
-    sin consentimiento** (8.3% de la muestra), violando la Ley 29733. El modelo PuLP corrige esto, priorizando clientes 
-    con alto CLV y recencia, logrando un mayor margen operativo con **182 contactos menos**.
+    💡 <strong>Hallazgo Gerencial Clave:</strong> La política actual de contactar a los primeros 600 clientes por ID es <strong>infactible</strong> 
+    (excede el almacén en 83 unidades y el presupuesto de compra en S/ 888). Además, intentaba contactar a <strong>50 clientes 
+    sin consentimiento</strong> (8.3% de la muestra), violando la Ley 29733. El modelo PuLP corrige esto, priorizando clientes 
+    con alto CLV y recencia, logrando un mayor margen operativo con <strong>182 contactos menos</strong>.
     """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # Tabla resumen comparativa
-    st.markdown('<p class="subsection-title">📋 Comparativa: Política Actual (Ajustada) vs. Solución Óptima</p>', unsafe_allow_html=True)
+    st.markdown('<h3 class="section-heading" style="font-size: 18px;">Comparativa: Política Actual (Ajustada) vs. Solución Óptima</h3>', unsafe_allow_html=True)
     
     df_display = df_comparacion.copy()
     df_display["Política Actual"] = df_display["Política Actual"].apply(lambda x: f"{x:,.2f}" if isinstance(x, float) else f"{int(x):,}")
@@ -240,7 +570,7 @@ if menu == "📊 Resumen Ejecutivo":
 
     st.markdown('<div class="warning-box">', unsafe_allow_html=True)
     st.markdown("""
-    ⚠️ **Nota de Transparencia:** La "Política Actual (Ajustada)" refleja la aplicación de un factor de corrección de **0.9055** 
+    ⚠️ <strong>Nota de Transparencia:</strong> La "Política Actual (Ajustada)" refleja la aplicación de un factor de corrección de <strong>0.9055</strong> 
     sobre las compras originales, ya que la política cruda violaba las restricciones de almacenamiento (883 > 800 u.) 
     y presupuesto de compra (S/ 48,888 > S/ 48,000).
     """, unsafe_allow_html=True)
@@ -249,14 +579,13 @@ if menu == "📊 Resumen Ejecutivo":
 # ==============================================================================
 # PESTAÑA 2: PRONÓSTICO DE DEMANDA
 # ==============================================================================
-elif menu == "📈 Pronóstico de Demanda":
-    st.markdown('<p class="section-title">Pronóstico Holt-Winters · Próximas 4 Semanas</p>', unsafe_allow_html=True)
-    st.markdown('<p class="sub-header">Modelo estadístico con estacionalidad de 52 semanas · Supuesto: Se repone la demanda pronosticada menos el stock disponible</p>', unsafe_allow_html=True)
-
+elif pagina == "Pronóstico de Demanda":
+    st.markdown('<div class="subsection-heading">Modelo estadístico con estacionalidad de 52 semanas</div>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-heading">Pronóstico Holt-Winters · Próximas 4 Semanas</h2>', unsafe_allow_html=True)
+    
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        # Gráfico de barras profesional con Plotly
         fig = go.Figure()
         colores = ["#3B82F6", "#8B5CF6", "#10B981", "#F59E0B", "#EF4444", "#06B6D4"]
         
@@ -275,25 +604,29 @@ elif menu == "📈 Pronóstico de Demanda":
             title="Pronóstico de Demanda por Familia de Producto",
             xaxis_title="Familia de Producto",
             yaxis_title="Unidades Pronosticadas",
-            template="plotly_dark",
+            template="plotly_white",
             height=400,
             showlegend=False,
-            plot_bgcolor='#1F2937',
-            paper_bgcolor='#111827',
-            font=dict(color='#E5E7EB')
+            plot_bgcolor='#FAFAF8',
+            paper_bgcolor='#FAFAF8',
+            font=dict(color='#1a1a1a', family='Georgia')
         )
         st.plotly_chart(fig, use_container_width=True)
     
     with col2:
-        st.metric("Unidades Totales a Reponer", f"{TOTAL_PRONOSTICO:,}")
+        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-label">Unidades Totales a Reponer</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="kpi-value">{TOTAL_PRONOSTICO:,}</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
         
-        st.markdown('<p class="subsection-title">🏆 Familias Priorizadas</p>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-card" style="margin-top: 16px;">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-label">🏆 Familias Priorizadas</div>', unsafe_allow_html=True)
         df_ranked = df_pronostico.sort_values("Pronóstico 4S (Und.)", ascending=False).reset_index(drop=True)
         for i, row in df_ranked.head(3).iterrows():
-            st.markdown(f"**{i+1}. {row['Familia']}** ({row['Pronóstico 4S (Und.)']} u.)")
+            st.markdown(f"<div style='padding: 8px 0; border-bottom: 1px solid #e8e8e4;'><strong>{i+1}. {row['Familia']}</strong><br><span style='color: #888; font-size: 13px;'>{row['Pronóstico 4S (Und.)']} u.</span></div>", unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
-    # Tabla detallada
-    st.markdown('<p class="subsection-title">📊 Detalle por Familia</p>', unsafe_allow_html=True)
+    st.markdown('<h3 class="section-heading" style="font-size: 18px;">Detalle por Familia</h3>', unsafe_allow_html=True)
     df_pronostico_display = df_pronostico.copy()
     df_pronostico_display["Pronóstico 4S (Und.)"] = df_pronostico_display["Pronóstico 4S (Und.)"].apply(lambda x: f"{x:,}")
     df_pronostico_display["Margen Unitario (S/)"] = df_pronostico_display["Margen Unitario (S/)"].apply(lambda x: f"S/ {x:.2f}")
@@ -302,10 +635,9 @@ elif menu == "📈 Pronóstico de Demanda":
 # ==============================================================================
 # PESTAÑA 3: OPTIMIZACIÓN Y ESCENARIOS
 # ==============================================================================
-elif menu == "⚖️ Optimización y Escenarios":
-    st.markdown('<p class="section-title">Política Actual vs. Solución Óptima PuLP</p>', unsafe_allow_html=True)
+elif pagina == "Optimización y Escenarios":
+    st.markdown('<h2 class="section-heading">Política Actual vs. Solución Óptima PuLP</h2>', unsafe_allow_html=True)
     
-    # Tabla comparativa
     df_comp_display = df_comparacion.copy()
     df_comp_display["Política Actual"] = df_comp_display["Política Actual"].apply(lambda x: f"{x:,.2f}" if isinstance(x, float) else f"{int(x):,}")
     df_comp_display["Solución Óptima"] = df_comp_display["Solución Óptima"].apply(lambda x: f"{x:,.2f}" if isinstance(x, float) else f"{int(x):,}")
@@ -313,47 +645,54 @@ elif menu == "⚖️ Optimización y Escenarios":
 
     st.markdown('<div class="warning-box">', unsafe_allow_html=True)
     st.markdown("""
-    ⚠️ **Nota de Transparencia:** La "Política Actual (Ajustada)" refleja la aplicación de un factor de corrección de **0.9055** 
+    ⚠️ <strong>Nota de Transparencia:</strong> La "Política Actual (Ajustada)" refleja la aplicación de un factor de corrección de <strong>0.9055</strong> 
     sobre las compras originales, ya que la política cruda violaba las restricciones de almacenamiento (883 > 800 u.) 
     y presupuesto de compra (S/ 48,888 > S/ 48,000).
     """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # Simulador de Escenarios
-    st.markdown('<p class="section-title">🎛️ Simulador de Escenarios de Sensibilidad</p>', unsafe_allow_html=True)
-    st.markdown('<p class="sub-header">Ajuste el escenario para observar el impacto en el Valor de Retención (6m) y Operación (4s)</p>', unsafe_allow_html=True)
+    st.markdown('<h3 class="section-heading" style="font-size: 18px;">🎛️ Simulador de Escenarios de Sensibilidad</h3>', unsafe_allow_html=True)
+    st.markdown('<p style="color: #666; font-size: 14px;">Ajuste el escenario para observar el impacto en el Valor de Retención (6m) y Operación (4s)</p>', unsafe_allow_html=True)
     
     escenario_sel = st.selectbox(
         "Seleccione el escenario:",
         list(escenarios.keys()),
-        index=1  # Efecto 5% por defecto
+        index=1
     )
     
     datos_esc = escenarios[escenario_sel]
     
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.metric("Contactos Recomendados", f"{datos_esc['Contactos']:,}")
+        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-label">Contactos Recomendados</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="kpi-value">{datos_esc["Contactos"]:,}</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
     with col2:
-        st.metric("Valor de Retención (6m)", f"S/ {datos_esc['Retención']:,.2f}")
+        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-label">Valor de Retención (6m)</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="kpi-value" style="font-size: 24px;">S/ {datos_esc["Retención"]:,.2f}</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
     with col3:
-        st.metric("Valor de Operación (4s)", f"S/ {datos_esc['Operación']:,.2f}")
+        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-label">Valor de Operación (4s)</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="kpi-value" style="font-size: 24px;">S/ {datos_esc["Operación"]:,.2f}</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
     
     if "0%" in escenario_sel:
         st.markdown('<div class="danger-box">', unsafe_allow_html=True)
-        st.markdown("🛑 **Acción del Modelo:** Ante un efecto nulo, el modelo decide **no contactar a nadie** (0 contactos) para evitar destruir valor con costes hundidos.")
+        st.markdown("🛑 <strong>Acción del Modelo:</strong> Ante un efecto nulo, el modelo decide <strong>no contactar a nadie</strong> (0 contactos) para evitar destruir valor con costes hundidos.")
         st.markdown('</div>', unsafe_allow_html=True)
     elif "10%" in escenario_sel:
         st.markdown('<div class="success-box">', unsafe_allow_html=True)
-        st.markdown("✅ **Escenario Optimista:** Con un efecto del 10%, el modelo amplía la campaña a **791 contactos**, elevando el valor de retención a **S/ 3,094.64**.")
+        st.markdown("✅ <strong>Escenario Optimista:</strong> Con un efecto del 10%, el modelo amplía la campaña a <strong>791 contactos</strong>, elevando el valor de retención a <strong>S/ 3,094.64</strong>.")
         st.markdown('</div>', unsafe_allow_html=True)
     elif "Compra" in escenario_sel or "Almacén" in escenario_sel:
         st.markdown('<div class="warning-box">', unsafe_allow_html=True)
-        st.markdown(f"⚠️ **Restricción Reducida:** El valor de operación disminuye a **S/ {datos_esc['Operación']:,.2f}**, pero la estrategia de retención se mantiene óptima (419 contactos).")
+        st.markdown(f"⚠️ <strong>Restricción Reducida:</strong> El valor de operación disminuye a <strong>S/ {datos_esc['Operación']:,.2f}</strong>, pero la estrategia de retención se mantiene óptima (419 contactos).")
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # Tabla completa de escenarios
-    st.markdown('<p class="subsection-title">📊 Todos los Escenarios</p>', unsafe_allow_html=True)
+    st.markdown('<h3 class="section-heading" style="font-size: 18px;">Todos los Escenarios</h3>', unsafe_allow_html=True)
     df_escenarios = pd.DataFrame([
         {"Escenario": k, "Contactos WA": v["Contactos"], "Valor Retención (6m)": f"S/ {v['Retención']:,.2f}", "Valor Operación (4s)": f"S/ {v['Operación']:,.2f}"}
         for k, v in escenarios.items()
@@ -363,29 +702,35 @@ elif menu == "⚖️ Optimización y Escenarios":
 # ==============================================================================
 # PESTAÑA 4: GOBIERNO Y PROCESOS
 # ==============================================================================
-elif menu == "🛡️ Gobierno y Procesos":
-    st.markdown('<p class="section-title">Control, Cumplimiento y Explicabilidad</p>', unsafe_allow_html=True)
+elif pagina == "Gobierno y Procesos":
+    st.markdown('<h2 class="section-heading">Control, Cumplimiento y Explicabilidad</h2>', unsafe_allow_html=True)
     
     tab1, tab2, tab3 = st.tabs(["📉 Carta de Control", "🔒 Auditoría de Consentimiento", "📜 Contrato de Datos"])
     
     with tab1:
-        st.markdown('<p class="subsection-title">Estabilidad del Proceso de Preparación</p>', unsafe_allow_html=True)
+        st.markdown('<div class="subsection-heading">Estabilidad del Proceso de Preparación</div>', unsafe_allow_html=True)
         
         col1, col2 = st.columns(2)
         with col1:
-            st.metric("Días de Monitoreo", "1,341")
+            st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+            st.markdown('<div class="kpi-label">Días de Monitoreo</div>', unsafe_allow_html=True)
+            st.markdown('<div class="kpi-value">1,341</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
         with col2:
-            st.metric("Alertas Fuera de Control", "0")
+            st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+            st.markdown('<div class="kpi-label">Alertas Fuera de Control</div>', unsafe_allow_html=True)
+            st.markdown('<div class="kpi-value">0</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
         
         st.markdown('<div class="success-box">', unsafe_allow_html=True)
         st.markdown("""
-        ✅ **Proceso Estadísticamente Estable:** La carta X̄ con límites variables (factor A2 = 0.235 para n promedio = 14) 
-        muestra **0 alertas en 1,341 días**. Los límites de referencia son **33.85 min - 47.73 min**, lo que sugiere que 
+        ✅ <strong>Proceso Estadísticamente Estable:</strong> La carta X̄ con límites variables (factor A2 = 0.235 para n promedio = 14) 
+        muestra <strong>0 alertas en 1,341 días</strong>. Los límites de referencia son <strong>33.85 min - 47.73 min</strong>, lo que sugiere que 
         la operación puede soportar el plan de reposición propuesto sin cuellos de botella inesperados.
         """, unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
         
-        st.markdown('<p class="subsection-title">📋 Parámetros de la Carta</p>', unsafe_allow_html=True)
+        st.markdown('<h3 class="section-heading" style="font-size: 18px;">Parámetros de la Carta</h3>', unsafe_allow_html=True)
         df_carta = pd.DataFrame({
             "Parámetro": ["Periodo Base", "Tamaño de Subgrupo (n)", "Factor A2", "Línea Central", "LCL", "UCL", "Total Días Monitoreados", "Alertas Detectadas"],
             "Valor": ["2023-01-02 a 2023-02-07 (30 días)", "14 (promedio)", "0.235", "40.79 min", "33.85 min", "47.73 min", "1,341", "0"]
@@ -393,42 +738,55 @@ elif menu == "🛡️ Gobierno y Procesos":
         st.dataframe(df_carta, use_container_width=True, hide_index=True)
 
     with tab2:
-        st.markdown('<p class="subsection-title">🔒 Privacidad por Diseño (Ley 29733)</p>', unsafe_allow_html=True)
-        st.markdown("La regla transversal del proyecto establece que **ningún cliente sin `consentimiento_contacto = 1` puede ser contactado**.")
+        st.markdown('<div class="subsection-heading">Privacidad por Diseño (Ley 29733)</div>', unsafe_allow_html=True)
+        st.markdown('<p style="color: #1a1a1a; font-size: 14px;">La regla transversal del proyecto establece que <strong>ningún cliente sin <code>consentimiento_contacto = 1</code> puede ser contactado</strong>.</p>', unsafe_allow_html=True)
         
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric("Clientes en Política Original", "600")
+            st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+            st.markdown('<div class="kpi-label">Clientes en Política Original</div>', unsafe_allow_html=True)
+            st.markdown('<div class="kpi-value">600</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
         with col2:
-            st.metric("Sin Consentimiento (Riesgo)", "50", "-8.3%", delta_color="inverse")
+            st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+            st.markdown('<div class="kpi-label">Sin Consentimiento (Riesgo)</div>', unsafe_allow_html=True)
+            st.markdown('<div class="kpi-value">50</div>', unsafe_allow_html=True)
+            st.markdown('<div class="kpi-delta negative">↓ -8.3%</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
         with col3:
-            st.metric("Cartera Elegible Real", "1,043")
+            st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+            st.markdown('<div class="kpi-label">Cartera Elegible Real</div>', unsafe_allow_html=True)
+            st.markdown('<div class="kpi-value">1,043</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
         with col4:
-            st.metric("Contactados por el Modelo", "418", "+100% Cumplimiento", delta_color="normal")
+            st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+            st.markdown('<div class="kpi-label">Contactados por el Modelo</div>', unsafe_allow_html=True)
+            st.markdown('<div class="kpi-value">418</div>', unsafe_allow_html=True)
+            st.markdown('<div class="kpi-delta positive">↑ +100% Cumplimiento</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
         
         st.markdown('<div class="danger-box">', unsafe_allow_html=True)
         st.markdown("""
-        🚨 **Hallazgo de Gobierno:** La política actual proponía contactar a **50 clientes (8.3%) sin consentimiento registrado**, 
+        🚨 <strong>Hallazgo de Gobierno:</strong> La política actual proponía contactar a <strong>50 clientes (8.3%) sin consentimiento registrado</strong>, 
         lo cual representa un riesgo de cumplimiento normativo. La solución óptima de PuLP incorpora el filtro 
-        `consentimiento_contacto = 1` desde la extracción de la cartera, garantizando **100% de cumplimiento**.
+        <code>consentimiento_contacto = 1</code> desde la extracción de la cartera, garantizando <strong>100% de cumplimiento</strong>.
         """, unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
     with tab3:
-        st.markdown('<p class="subsection-title">📜 Contrato de Datos y Linaje (8 Tablas)</p>', unsafe_allow_html=True)
-        st.markdown('<p class="sub-header">Desplázate horizontalmente para ver todas las columnas</p>', unsafe_allow_html=True)
+        st.markdown('<div class="subsection-heading">Contrato de Datos y Linaje (8 Tablas)</div>', unsafe_allow_html=True)
+        st.markdown('<p style="color: #666; font-size: 13px;">Desplázate horizontalmente para ver todas las columnas</p>', unsafe_allow_html=True)
         
-        # Configuración de anchos de columna para mejor visualización
         st.dataframe(
             df_contrato,
             use_container_width=True,
             hide_index=True,
             column_config={
                 "Tabla": st.column_config.TextColumn(width="small"),
-                "Origen": st.column_config.TextColumn(width="small"),
-                "Productor": st.column_config.TextColumn(width="small"),
+                "Origen": st.column_config.TextColumn(width="medium"),
+                "Productor": st.column_config.TextColumn(width="medium"),
                 "Frecuencia": st.column_config.TextColumn(width="small"),
-                "Acceso": st.column_config.TextColumn(width="small"),
+                "Acceso": st.column_config.TextColumn(width="medium"),
                 "Retención": st.column_config.TextColumn(width="small"),
                 "Regla Clave": st.column_config.TextColumn(width="large"),
             }
@@ -437,17 +795,25 @@ elif menu == "🛡️ Gobierno y Procesos":
 # ==============================================================================
 # PESTAÑA 5: ASISTENTE ANALÍTICO
 # ==============================================================================
-elif menu == "🤖 Asistente Analítico":
-    st.markdown('<p class="section-title">Evaluación del Asistente Text-to-SQL</p>', unsafe_allow_html=True)
-    st.markdown('<p class="sub-header">El asistente opera en modo solo lectura con un validador de seguridad que bloquea instrucciones como `DROP`, `DELETE` o `UPDATE`.</p>', unsafe_allow_html=True)
+elif pagina == "Asistente Analítico":
+    st.markdown('<h2 class="section-heading">Evaluación del Asistente Text-to-SQL</h2>', unsafe_allow_html=True)
+    st.markdown('<p style="color: #666; font-size: 14px;">El asistente opera en modo solo lectura con un validador de seguridad que bloquea instrucciones como <code>DROP</code>, <code>DELETE</code> o <code>UPDATE</code>.</p>', unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     with col1:
-        st.metric("Tasa de Acierto Global", "95.0%", "19 de 20 preguntas correctas", delta_color="normal")
+        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-label">Tasa de Acierto Global</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-value">95.0%</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-delta positive">↑ 19 de 20 preguntas correctas</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
     with col2:
-        st.metric("Tasa de Alucinación", "5.0%", "Detectada y contenida en pregunta ambigua", delta_color="inverse")
+        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-label">Tasa de Alucinación</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-value">5.0%</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-delta negative">↑ Detectada y contenida en pregunta ambigua</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown('<p class="subsection-title">📋 Ejemplos de Comportamiento del Asistente</p>', unsafe_allow_html=True)
+    st.markdown('<h3 class="section-heading" style="font-size: 18px;">Ejemplos de Comportamiento del Asistente</h3>', unsafe_allow_html=True)
     
     with st.expander("✅ Pregunta Legítima (Línea Base Determinista)", expanded=True):
         st.markdown("**Pregunta:** ¿Cuántos clientes en total tienen consentimiento de contacto?")
@@ -465,7 +831,7 @@ elif menu == "🤖 Asistente Analítico":
 
     st.markdown('<div class="warning-box">', unsafe_allow_html=True)
     st.markdown("""
-    📌 **Declaración:** Conforme a la consigna, se declara que **no se ejecutó un LLM real** en este entorno. 
+    📌 <strong>Declaración:</strong> Conforme a la consigna, se declara que <strong>no se ejecutó un LLM real</strong> en este entorno. 
     Esta evaluación se basa en un framework de simulación controlada y una línea base determinista (SQL escrito a mano) 
     para garantizar la transparencia académica.
     """, unsafe_allow_html=True)
@@ -474,7 +840,7 @@ elif menu == "🤖 Asistente Analítico":
 # ==============================================================================
 # FOOTER
 # ==============================================================================
-st.markdown('<div class="footer">', unsafe_allow_html=True)
+st.markdown('<div style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #e8e8e4; text-align: center; color: #888888; font-size: 12px;">', unsafe_allow_html=True)
 st.markdown("""
 Desarrollado por el Equipo de Analítica Empresarial | PMD2 2026-II · TECSUP<br>
 Las cifras presentadas son el resultado de la ejecución reproducible del notebook de Colab asociado.
