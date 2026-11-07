@@ -13,14 +13,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Paleta corporativa optimizada para alto contraste
-COLOR_PRIMARY = "#3B82F6"
-COLOR_SUCCESS = "#10B981"
-COLOR_WARNING = "#F59E0B"
-COLOR_DANGER = "#EF4444"
-COLOR_INFO = "#6366F1"
-
-# CSS personalizado optimizado
+# CSS personalizado optimizado para alto contraste y estética profesional
 st.markdown("""
 <style>
     /* Header y Títulos */
@@ -107,12 +100,9 @@ st.markdown("""
         font-size: 0.85rem !important;
     }
     
-    /* Tablas con scroll horizontal */
+    /* Tablas */
     .stDataFrame {
         font-size: 0.85rem;
-    }
-    .stDataFrame [data-testid="stHorizontalBlock"] {
-        overflow-x: auto;
     }
     
     /* Footer */
@@ -168,30 +158,30 @@ escenarios = {
 
 # Contrato de Datos (8 tablas) - VERSIÓN COMPACTA PARA MEJOR VISUALIZACIÓN
 data_contrato = [
-    {"Tabla": "clientes", "Origen": "CRM", "Productor": "Marketing", 
-     "Frecuencia": "Diaria", "Acceso": "Data Stewards, Analistas", "Retención": "5 años (Ley 29733)",
-     "Regla": "Campo 'consentimiento_contacto' es fuente de verdad"},
-    {"Tabla": "actividad", "Origen": "ERP Logística", "Productor": "Operaciones", 
-     "Frecuencia": "Streaming (1h)", "Acceso": "Analistas, Finanzas", "Retención": "7 años (SUNAT)",
-     "Regla": "Solo eventos estado='entregado' para métricas"},
-    {"Tabla": "cohortes", "Origen": "Pipeline Datos", "Productor": "Data Engineering", 
-     "Frecuencia": "Mensual", "Acceso": "Científicos de Datos", 
-     "Retención": "36 meses", "Regla": "Fecha corte < eventos de predicción"},
-    {"Tabla": "operaciones", "Origen": "Sistema Incidencias", "Productor": "Control Calidad", 
-     "Frecuencia": "Diaria", "Acceso": "Auditoría, Operaciones", "Retención": "5 años",
-     "Regla": "Reembolsos requieren ticket de auditoría"},
-    {"Tabla": "demanda", "Origen": "ERP Ventas", "Productor": "Planificación", 
-     "Frecuencia": "Semanal", "Acceso": "Analistas, Ciencia de Datos", "Retención": "5 años",
-     "Regla": "Registrar solicitado, atendido y faltante"},
-    {"Tabla": "recursos", "Origen": "ERP Recursos", "Productor": "Finanzas", 
-     "Frecuencia": "Mensual", "Acceso": "Gerencia, Analistas", "Retención": "5 años",
-     "Regla": "Límites y costes para optimización"},
-    {"Tabla": "politica_actual", "Origen": "Reglas de Negocio", "Productor": "Gerencia Comercial", 
-     "Frecuencia": "Anual", "Acceso": "Analistas, Gerencia", "Retención": "5 años",
-     "Regla": "Reconstruir escenario sin decisiones ocultas"},
-    {"Tabla": "documentos", "Origen": "Gestión Documental", "Productor": "Legal", 
-     "Frecuencia": "Por actualización", "Acceso": "Asistente (RAG), Auditoría", 
-     "Retención": "Vigencia + 5 años", "Regla": "Fuente para asistente y cumplimiento"},
+    {"Tabla": "clientes", "Origen": "CRM", "Productor": "Marketing", "Frecuencia": "Diaria", 
+     "Acceso": "Data Stewards", "Retención": "5 años (Ley 29733)",
+     "Regla Clave": "Campo 'consentimiento_contacto' es fuente de verdad para campañas"},
+    {"Tabla": "actividad", "Origen": "ERP Logística", "Productor": "Operaciones", "Frecuencia": "Streaming (1h)", 
+     "Acceso": "Analistas, Finanzas", "Retención": "7 años (SUNAT)",
+     "Regla Clave": "Solo eventos con estado='entregado' para métricas de valor"},
+    {"Tabla": "cohortes", "Origen": "Pipeline Datos", "Productor": "Data Engineering", "Frecuencia": "Mensual", 
+     "Acceso": "Científicos Datos", "Retención": "36 meses",
+     "Regla Clave": "Fecha de corte estrictamente anterior a eventos de predicción"},
+    {"Tabla": "operaciones", "Origen": "Sistema Incidencias", "Productor": "Control Calidad", "Frecuencia": "Diaria", 
+     "Acceso": "Auditoría, Ops", "Retención": "5 años",
+     "Regla Clave": "Montos de reembolso requieren ticket de auditoría asociado"},
+    {"Tabla": "demanda", "Origen": "ERP Ventas", "Productor": "Planificación", "Frecuencia": "Semanal", 
+     "Acceso": "Analistas, Data", "Retención": "5 años",
+     "Regla Clave": "Registrar solicitado, atendido y faltante por separado"},
+    {"Tabla": "recursos", "Origen": "ERP Recursos", "Productor": "Finanzas", "Frecuencia": "Mensual", 
+     "Acceso": "Gerencia, Analistas", "Retención": "5 años",
+     "Regla Clave": "Límites, costes y márgenes son fuente de verdad para optimización"},
+    {"Tabla": "politica_actual", "Origen": "Reglas Negocio", "Productor": "Gerencia Comercial", "Frecuencia": "Anual", 
+     "Acceso": "Analistas, Gerencia", "Retención": "5 años",
+     "Regla Clave": "Reconstruir escenario actual sin decisiones manuales ocultas"},
+    {"Tabla": "documentos", "Origen": "Gestión Documental", "Productor": "Legal", "Frecuencia": "Por actualización", 
+     "Acceso": "Asistente RAG, Audit", "Retención": "Vigencia + 5 años",
+     "Regla Clave": "Fuente de verdad para asistente y verificación de cumplimiento"},
 ]
 df_contrato = pd.DataFrame(data_contrato)
 
@@ -295,9 +285,7 @@ elif menu == "📈 Pronóstico de Demanda":
         st.plotly_chart(fig, use_container_width=True)
     
     with col2:
-        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
         st.metric("Unidades Totales a Reponer", f"{TOTAL_PRONOSTICO:,}")
-        st.markdown('</div>', unsafe_allow_html=True)
         
         st.markdown('<p class="subsection-title">🏆 Familias Priorizadas</p>', unsafe_allow_html=True)
         df_ranked = df_pronostico.sort_values("Pronóstico 4S (Und.)", ascending=False).reset_index(drop=True)
@@ -429,7 +417,22 @@ elif menu == "🛡️ Gobierno y Procesos":
     with tab3:
         st.markdown('<p class="subsection-title">📜 Contrato de Datos y Linaje (8 Tablas)</p>', unsafe_allow_html=True)
         st.markdown('<p class="sub-header">Desplázate horizontalmente para ver todas las columnas</p>', unsafe_allow_html=True)
-        st.dataframe(df_contrato, use_container_width=True, hide_index=True)
+        
+        # Configuración de anchos de columna para mejor visualización
+        st.dataframe(
+            df_contrato,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Tabla": st.column_config.TextColumn(width="small"),
+                "Origen": st.column_config.TextColumn(width="small"),
+                "Productor": st.column_config.TextColumn(width="small"),
+                "Frecuencia": st.column_config.TextColumn(width="small"),
+                "Acceso": st.column_config.TextColumn(width="small"),
+                "Retención": st.column_config.TextColumn(width="small"),
+                "Regla Clave": st.column_config.TextColumn(width="large"),
+            }
+        )
 
 # ==============================================================================
 # PESTAÑA 5: ASISTENTE ANALÍTICO
