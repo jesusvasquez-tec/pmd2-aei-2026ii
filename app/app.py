@@ -14,26 +14,28 @@ st.set_page_config(
 )
 
 # ==============================================================================
-# CSS PERSONALIZADO - TARJETAS KPI CORREGIDAS
+# CSS PERSONALIZADO - SIDEBAR Y CONTENIDO DIFERENCIADOS
 # ==============================================================================
 st.markdown("""
 <style>
-    /* ===== FONDO GENERAL ===== */
+    /* ===== FONDO DEL CONTENIDO PRINCIPAL (tono slate oscuro) ===== */
     .stApp {
-        background-color: #0f172a !important;
+        background-color: #111827 !important;
     }
     
-    /* ===== SIDEBAR ===== */
+    /* ===== SIDEBAR (azul marino más profundo y distintivo) ===== */
     [data-testid="stSidebar"] {
-        background-color: #0f172a !important;
+        background-color: #0a1929 !important;
+        border-right: 2px solid #1e3a8a !important;
     }
     
     [data-testid="stSidebarNav"] {
-        background-color: #0f172a !important;
+        background-color: #0a1929 !important;
     }
     
+    /* Logo y título del sidebar */
     .sidebar-logo {
-        color: #ffffff !important;
+        color: #ffffff;
         font-size: 26px;
         font-weight: 700;
         margin-bottom: 2px;
@@ -41,11 +43,11 @@ st.markdown("""
     }
     
     .sidebar-logo span {
-        color: #3b82f6 !important;
+        color: #60a5fa;
     }
     
     .sidebar-tagline {
-        color: #93c5fd !important;
+        color: #93c5fd;
         font-size: 9px;
         letter-spacing: 3px;
         text-transform: uppercase;
@@ -54,11 +56,13 @@ st.markdown("""
         margin-bottom: 18px;
     }
     
+    /* Caja del observatorio */
     .observatory-box {
         background-color: #1e3a8a !important;
         border-radius: 10px;
         padding: 12px 14px;
         margin: 0 14px 18px;
+        border: 1px solid #3b82f6;
     }
     
     .observatory-text {
@@ -72,8 +76,9 @@ st.markdown("""
         font-size: 10px;
     }
     
+    /* Títulos de sección */
     .section-title {
-        color: #93c5fd !important;
+        color: #60a5fa !important;
         font-size: 9px;
         letter-spacing: 2.5px;
         text-transform: uppercase;
@@ -81,13 +86,14 @@ st.markdown("""
         font-weight: 600;
     }
     
+    /* Botones de navegación */
     .nav-button {
         width: 100%;
         padding: 10px 14px;
         margin: 2px 10px;
         border-radius: 8px;
-        border: none;
-        background-color: transparent;
+        border: 1px solid #1e3a8a;
+        background-color: #0f2744 !important;
         color: #bfdbfe !important;
         text-align: left;
         font-size: 14px;
@@ -96,18 +102,21 @@ st.markdown("""
     }
     
     .nav-button:hover {
-        background-color: #1e3a8a;
+        background-color: #1e3a8a !important;
         color: #ffffff !important;
+        border-color: #3b82f6;
     }
     
     .nav-button.active {
         background-color: #3b82f6 !important;
         color: #ffffff !important;
+        border-color: #60a5fa;
         font-weight: 600;
     }
     
+    /* Card del modelo */
     .model-card {
-        background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%) !important;
+        background: linear-gradient(135deg, #1e3a8a 0%, #0a1929 100%) !important;
         border-radius: 12px;
         padding: 14px;
         margin: 18px 14px;
@@ -153,6 +162,7 @@ st.markdown("""
         margin-top: 8px;
     }
     
+    /* Perfil de usuario */
     .user-profile {
         display: flex;
         align-items: center;
@@ -193,7 +203,7 @@ st.markdown("""
         font-size: 11px;
         letter-spacing: 2px;
         text-transform: uppercase;
-        color: #93c5fd !important;
+        color: #60a5fa !important;
         font-weight: 600;
         margin-bottom: 8px;
     }
@@ -208,7 +218,7 @@ st.markdown("""
     
     .main-subtitle {
         font-size: 15px;
-        color: #bfdbfe !important;
+        color: #9ca3af !important;
         margin-bottom: 28px;
     }
     
@@ -224,25 +234,25 @@ st.markdown("""
         font-size: 11px;
         letter-spacing: 2px;
         text-transform: uppercase;
-        color: #93c5fd !important;
+        color: #60a5fa !important;
         font-weight: 600;
         margin-bottom: 8px;
     }
     
-    /* ===== TARJETAS KPI - SIN FONDO DUPLICADO ===== */
+    /* ===== TARJETAS KPI (fondo más claro para destacar sobre el contenido oscuro) ===== */
     .kpi-card {
-        background-color: transparent !important;
-        border: none !important;
-        border-radius: 0 !important;
-        padding: 0 !important;
-        box-shadow: none !important;
+        background-color: #1e293b !important;
+        border: 1px solid #334155 !important;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
     }
     
     .kpi-label {
         font-size: 10px;
         letter-spacing: 1.5px;
         text-transform: uppercase;
-        color: #93c5fd !important;
+        color: #60a5fa !important;
         font-weight: 600;
         margin-bottom: 8px;
     }
@@ -253,12 +263,6 @@ st.markdown("""
         color: #ffffff !important;
         margin-bottom: 4px;
         letter-spacing: -1px;
-    }
-    
-    .kpi-unit {
-        font-size: 14px;
-        color: #93c5fd !important;
-        font-weight: 300;
     }
     
     .kpi-delta {
@@ -327,11 +331,11 @@ st.markdown("""
     /* ===== FOOTER ===== */
     .footer {
         text-align: center;
-        color: #9ca3af !important;
+        color: #6b7280 !important;
         font-size: 12px;
         margin-top: 60px;
         padding-top: 20px;
-        border-top: 1px solid #334155;
+        border-top: 1px solid #374151;
     }
     
     /* ===== FORZAR VISIBILIDAD ===== */
@@ -340,11 +344,11 @@ st.markdown("""
     }
     
     p, div, span {
-        color: #ffffff;
+        color: #e5e7eb;
     }
     
     [data-testid="stMetricLabel"] {
-        color: #93c5fd !important;
+        color: #60a5fa !important;
     }
     
     [data-testid="stMetricValue"] {
@@ -357,17 +361,17 @@ st.markdown("""
     
     .stTabs [data-baseweb="tab-list"] {
         gap: 24px;
-        border-bottom: 1px solid #334155;
+        border-bottom: 1px solid #374151;
     }
     
     .stTabs [data-baseweb="tab"] {
-        color: #93c5fd !important;
+        color: #9ca3af !important;
         font-size: 14px;
         padding: 12px 4px;
     }
     
     .stTabs [aria-selected="true"] {
-        color: #3b82f6 !important;
+        color: #60a5fa !important;
         border-bottom: 2px solid #3b82f6 !important;
     }
 </style>
@@ -602,7 +606,7 @@ elif pagina_actual == "Pronóstico de Demanda":
             height=400,
             showlegend=False,
             plot_bgcolor='#1e293b',
-            paper_bgcolor='#0f172a',
+            paper_bgcolor='#111827',
             font=dict(color='#ffffff', family='Georgia')
         )
         st.plotly_chart(fig, use_container_width=True)
@@ -643,7 +647,7 @@ elif pagina_actual == "Optimización y Escenarios":
     st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('<h3 class="section-heading" style="font-size: 18px;">🎛️ Simulador de Escenarios de Sensibilidad</h3>', unsafe_allow_html=True)
-    st.markdown('<p style="color: #93c5fd; font-size: 14px;">Ajuste el escenario para observar el impacto en el Valor de Retención (6m) y Operación (4s)</p>', unsafe_allow_html=True)
+    st.markdown('<p style="color: #9ca3af; font-size: 14px;">Ajuste el escenario para observar el impacto en el Valor de Retención (6m) y Operación (4s)</p>', unsafe_allow_html=True)
     
     escenario_sel = st.selectbox(
         "Seleccione el escenario:",
@@ -727,7 +731,7 @@ elif pagina_actual == "Gobierno y Procesos":
 
     with tab2:
         st.markdown('<div class="subsection-heading">Privacidad por Diseño (Ley 29733)</div>', unsafe_allow_html=True)
-        st.markdown('<p style="color: #ffffff; font-size: 14px;">La regla transversal del proyecto establece que <strong>ningún cliente sin <code style="color: #34d399;">consentimiento_contacto = 1</code> puede ser contactado</strong>.</p>', unsafe_allow_html=True)
+        st.markdown('<p style="color: #e5e7eb; font-size: 14px;">La regla transversal del proyecto establece que <strong>ningún cliente sin <code style="color: #34d399;">consentimiento_contacto = 1</code> puede ser contactado</strong>.</p>', unsafe_allow_html=True)
         
         col1, col2, col3, col4 = st.columns(4)
         with col1:
@@ -763,7 +767,7 @@ elif pagina_actual == "Gobierno y Procesos":
 
     with tab3:
         st.markdown('<div class="subsection-heading">Contrato de Datos y Linaje (8 Tablas)</div>', unsafe_allow_html=True)
-        st.markdown('<p style="color: #93c5fd; font-size: 13px;">Desplázate horizontalmente para ver todas las columnas</p>', unsafe_allow_html=True)
+        st.markdown('<p style="color: #9ca3af; font-size: 13px;">Desplázate horizontalmente para ver todas las columnas</p>', unsafe_allow_html=True)
         
         st.dataframe(
             df_contrato,
@@ -782,7 +786,7 @@ elif pagina_actual == "Gobierno y Procesos":
 
 elif pagina_actual == "Asistente Analítico":
     st.markdown('<h2 class="section-heading">Evaluación del Asistente Text-to-SQL</h2>', unsafe_allow_html=True)
-    st.markdown('<p style="color: #93c5fd; font-size: 14px;">El asistente opera en modo solo lectura con un validador de seguridad que bloquea instrucciones como <code style="color: #34d399;">DROP</code>, <code style="color: #34d399;">DELETE</code> o <code style="color: #34d399;">UPDATE</code>.</p>', unsafe_allow_html=True)
+    st.markdown('<p style="color: #9ca3af; font-size: 14px;">El asistente opera en modo solo lectura con un validador de seguridad que bloquea instrucciones como <code style="color: #34d399;">DROP</code>, <code style="color: #34d399;">DELETE</code> o <code style="color: #34d399;">UPDATE</code>.</p>', unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     with col1:
