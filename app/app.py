@@ -14,19 +14,19 @@ st.set_page_config(
 )
 
 # ==============================================================================
-# CSS PERSONALIZADO - ESTILO AGRODATA CON PALETA AZULINA
+# CSS PERSONALIZADO - ESTILO AGRODATA CON FONDO OSCURO CONSISTENTE
 # ==============================================================================
 st.markdown("""
 <style>
-    /* ===== FONDO GENERAL ===== */
+    /* ===== FONDO GENERAL - TODO OSCURO ===== */
     .stApp {
-        background-color: #FAFAF8;
+        background-color: #0f172a !important;
     }
     
-    /* ===== SIDEBAR ESTILO AGRODATA CON AZUL ===== */
+    /* ===== SIDEBAR ESTILO AGRODATA ===== */
     [data-testid="stSidebar"] {
         background-color: #0f172a !important;
-        border-right: none;
+        border-right: 1px solid #1e3a8a;
     }
     
     [data-testid="stSidebarNav"] {
@@ -93,36 +93,32 @@ st.markdown("""
         font-weight: 600;
     }
     
-    /* Botones de navegación estilo Agrodata */
-    .nav-button {
+    /* Items de navegación */
+    .nav-item {
         display: flex;
         align-items: center;
-        width: 100%;
         padding: 10px 14px;
         margin: 2px 10px;
         border-radius: 8px;
-        background-color: transparent;
-        border: none;
         color: #bfdbfe;
-        text-align: left;
+        text-decoration: none;
         font-size: 14px;
         cursor: pointer;
         transition: all 0.2s;
-        font-family: inherit;
     }
     
-    .nav-button:hover {
+    .nav-item:hover {
         background-color: #1e3a8a;
         color: #ffffff;
     }
     
-    .nav-button.active {
+    .nav-item.active {
         background-color: #3b82f6;
         color: #ffffff;
         font-weight: 600;
     }
     
-    .nav-button.active::after {
+    .nav-item.active::after {
         content: "●";
         margin-left: auto;
         color: #ffffff;
@@ -141,6 +137,7 @@ st.markdown("""
         padding: 14px;
         margin: 18px 14px;
         overflow: hidden;
+        border: 1px solid #3b82f6;
     }
     
     .model-card-image {
@@ -185,7 +182,7 @@ st.markdown("""
         align-items: center;
     }
     
-    /* Perfil de usuario */
+    /* Perfil de usuario - GRUPO */
     .user-profile {
         display: flex;
         align-items: center;
@@ -206,6 +203,7 @@ st.markdown("""
         justify-content: center;
         font-weight: 700;
         font-size: 13px;
+        flex-shrink: 0;
     }
     
     .user-name {
@@ -219,19 +217,19 @@ st.markdown("""
         font-size: 10px;
     }
     
-    /* ===== CONTENIDO PRINCIPAL ===== */
+    /* ===== CONTENIDO PRINCIPAL - FONDO OSCURO ===== */
     .main-title {
         font-family: Georgia, 'Times New Roman', serif;
         font-size: 38px;
         font-weight: 400;
-        color: #1a1a1a;
+        color: #ffffff;
         margin-bottom: 8px;
         letter-spacing: -0.5px;
     }
     
     .main-subtitle {
         font-size: 15px;
-        color: #666666;
+        color: #93c5fd;
         margin-bottom: 28px;
         font-weight: 300;
     }
@@ -240,7 +238,7 @@ st.markdown("""
         font-family: Georgia, 'Times New Roman', serif;
         font-size: 22px;
         font-weight: 400;
-        color: #1a1a1a;
+        color: #ffffff;
         margin: 24px 0 12px;
         letter-spacing: -0.3px;
     }
@@ -249,25 +247,25 @@ st.markdown("""
         font-size: 11px;
         letter-spacing: 2px;
         text-transform: uppercase;
-        color: #666666;
+        color: #93c5fd;
         font-weight: 600;
         margin-bottom: 8px;
     }
     
-    /* Tarjetas KPI estilo Agrodata */
+    /* Tarjetas KPI estilo Agrodata - FONDO OSCURO */
     .kpi-card {
-        background-color: #ffffff;
-        border: 1px solid #e8e8e4;
+        background-color: #1e293b;
+        border: 1px solid #334155;
         border-radius: 12px;
         padding: 20px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
     }
     
     .kpi-label {
         font-size: 10px;
         letter-spacing: 1.5px;
         text-transform: uppercase;
-        color: #888888;
+        color: #93c5fd;
         font-weight: 600;
         margin-bottom: 8px;
     }
@@ -275,14 +273,14 @@ st.markdown("""
     .kpi-value {
         font-size: 32px;
         font-weight: 300;
-        color: #1a1a1a;
+        color: #ffffff;
         margin-bottom: 4px;
         letter-spacing: -1px;
     }
     
     .kpi-unit {
         font-size: 14px;
-        color: #888888;
+        color: #93c5fd;
         font-weight: 300;
     }
     
@@ -292,50 +290,50 @@ st.markdown("""
     }
     
     .kpi-delta.positive {
-        color: #059669;
+        color: #34d399;
     }
     
     .kpi-delta.negative {
-        color: #dc2626;
+        color: #f87171;
     }
     
-    /* Cajas de información con buen contraste */
+    /* Cajas de información - FONDOS OSCUROS */
     .info-box {
-        background-color: #eff6ff;
-        border-left: 3px solid #3b82f6;
+        background-color: #1e3a8a;
+        border-left: 3px solid #60a5fa;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #1e3a8a;
+        color: #ffffff;
         margin: 16px 0;
         font-size: 14px;
     }
     
     .success-box {
-        background-color: #f0fdf4;
-        border-left: 3px solid #059669;
+        background-color: #064e3b;
+        border-left: 3px solid #34d399;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #064e3b;
+        color: #ffffff;
         margin: 16px 0;
         font-size: 14px;
     }
     
     .warning-box {
-        background-color: #fffbeb;
-        border-left: 3px solid #d97706;
+        background-color: #78350f;
+        border-left: 3px solid #fbbf24;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #78350f;
+        color: #ffffff;
         margin: 16px 0;
         font-size: 14px;
     }
     
     .danger-box {
-        background-color: #fef2f2;
-        border-left: 3px solid #dc2626;
+        background-color: #7f1d1d;
+        border-left: 3px solid #f87171;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #7f1d1d;
+        color: #ffffff;
         margin: 16px 0;
         font-size: 14px;
     }
@@ -343,23 +341,25 @@ st.markdown("""
     /* Tabs personalizados */
     .stTabs [data-baseweb="tab-list"] {
         gap: 24px;
-        border-bottom: 1px solid #e8e8e4;
+        border-bottom: 1px solid #334155;
     }
     
     .stTabs [data-baseweb="tab"] {
-        color: #666666;
+        color: #93c5fd;
         font-size: 14px;
         padding: 12px 4px;
     }
     
     .stTabs [aria-selected="true"] {
-        color: #1e3a8a !important;
+        color: #3b82f6 !important;
         border-bottom: 2px solid #3b82f6 !important;
     }
     
-    /* Tablas minimalistas */
+    /* Tablas - FONDO OSCURO */
     .dataframe {
         font-size: 13px !important;
+        background-color: #1e293b !important;
+        color: #ffffff !important;
     }
     
     /* Ocultar elementos default */
@@ -367,9 +367,27 @@ st.markdown("""
     footer {visibility: hidden;}
     .stDeployButton {display:none;}
     
-    /* Ocultar el radio button nativo pero mantener funcionalidad */
-    [data-testid="stRadio"] {
-        display: none !important;
+    /* Forzar fondo oscuro en todo el contenido */
+    .block-container {
+        background-color: #0f172a !important;
+    }
+    
+    /* Ajustar colores de texto generales */
+    p, div, span, h1, h2, h3, h4, h5, h6 {
+        color: #ffffff !important;
+    }
+    
+    /* Ajustar colores de métricas de Streamlit */
+    [data-testid="stMetricLabel"] {
+        color: #93c5fd !important;
+    }
+    
+    [data-testid="stMetricValue"] {
+        color: #ffffff !important;
+    }
+    
+    [data-testid="stMetricDelta"] {
+        color: #34d399 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -437,11 +455,9 @@ df_contrato = pd.DataFrame(data_contrato)
 # ==============================================================================
 # NAVEGACIÓN FUNCIONAL CON st.session_state
 # ==============================================================================
-# Inicializar la página activa si no existe
 if 'pagina' not in st.session_state:
     st.session_state.pagina = "Resumen"
 
-# Lista de páginas con sus íconos
 paginas = {
     "Resumen": "📊",
     "Pronóstico de Demanda": "📈",
@@ -451,7 +467,7 @@ paginas = {
 }
 
 # ==============================================================================
-# SIDEBAR ESTILO AGRODATA CON NAVEGACIÓN FUNCIONAL
+# SIDEBAR ESTILO AGRODATA
 # ==============================================================================
 with st.sidebar:
     # Logo y tagline
@@ -475,9 +491,7 @@ with st.sidebar:
     # Botones de navegación funcionales
     for nombre_pagina, icono in paginas.items():
         es_activa = st.session_state.pagina == nombre_pagina
-        clase_activa = "active" if es_activa else ""
         
-        # Crear un botón que cambia el estado
         if st.button(
             f"{icono} {nombre_pagina}",
             key=f"nav_{nombre_pagina}",
@@ -506,13 +520,18 @@ with st.sidebar:
         </div>
     """, unsafe_allow_html=True)
     
-    # Perfil de usuario
+    # Perfil de usuario - GRUPO 3
     st.markdown("""
         <div class="user-profile">
-            <div class="user-avatar">J</div>
+            <div class="user-avatar">G3</div>
             <div>
-                <div class="user-name">Jesus</div>
-                <div class="user-role">Analista · Perú</div>
+                <div class="user-name">Grupo 3</div>
+                <div class="user-role">
+                    Alvino Carhuaricra, Enzo Gabriel<br>
+                    Cordova Agurto, Isabel Lucero<br>
+                    Palomino Acuña, Luis Alejandro<br>
+                    Vasquez Espinoza, Jesus Alejandro
+                </div>
             </div>
         </div>
     """, unsafe_allow_html=True)
@@ -521,7 +540,7 @@ with st.sidebar:
 # HEADER PRINCIPAL
 # ==============================================================================
 st.markdown('<div style="padding: 20px 0;">', unsafe_allow_html=True)
-st.markdown('<div style="font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #888888; font-weight: 600; margin-bottom: 8px;">Bienvenido a tu panel de decisión</div>', unsafe_allow_html=True)
+st.markdown('<div style="font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #93c5fd; font-weight: 600; margin-bottom: 8px;">Bienvenido a tu panel de decisión</div>', unsafe_allow_html=True)
 st.markdown('<h1 class="main-title">Tu negocio, en perspectiva.</h1>', unsafe_allow_html=True)
 st.markdown(f'<p class="main-subtitle">Explora el pasado. Anticipa la demanda. Decide con perspectiva. · Actualizado: {FECHA_ACTUALIZACION}</p>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
@@ -557,7 +576,7 @@ if pagina_actual == "Resumen":
         st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
         st.markdown('<div class="kpi-label">Unidades a Reponer</div>', unsafe_allow_html=True)
         st.markdown('<div class="kpi-value">1,333</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-delta" style="color: #666;">↑ Respetando tope de almacén</div>', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-delta" style="color: #93c5fd;">↑ Respetando tope de almacén</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
     with col4:
         st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
@@ -618,12 +637,12 @@ elif pagina_actual == "Pronóstico de Demanda":
             title="Pronóstico de Demanda por Familia de Producto",
             xaxis_title="Familia de Producto",
             yaxis_title="Unidades Pronosticadas",
-            template="plotly_white",
+            template="plotly_dark",
             height=400,
             showlegend=False,
-            plot_bgcolor='#FAFAF8',
-            paper_bgcolor='#FAFAF8',
-            font=dict(color='#1a1a1a', family='Georgia')
+            plot_bgcolor='#1e293b',
+            paper_bgcolor='#0f172a',
+            font=dict(color='#ffffff', family='Georgia')
         )
         st.plotly_chart(fig, use_container_width=True)
     
@@ -637,7 +656,7 @@ elif pagina_actual == "Pronóstico de Demanda":
         st.markdown('<div class="kpi-label">🏆 Familias Priorizadas</div>', unsafe_allow_html=True)
         df_ranked = df_pronostico.sort_values("Pronóstico 4S (Und.)", ascending=False).reset_index(drop=True)
         for i, row in df_ranked.head(3).iterrows():
-            st.markdown(f"<div style='padding: 8px 0; border-bottom: 1px solid #e8e8e4;'><strong>{i+1}. {row['Familia']}</strong><br><span style='color: #888; font-size: 13px;'>{row['Pronóstico 4S (Und.)']} u.</span></div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='padding: 8px 0; border-bottom: 1px solid #334155;'><strong style='color: #ffffff;'>{i+1}. {row['Familia']}</strong><br><span style='color: #93c5fd; font-size: 13px;'>{row['Pronóstico 4S (Und.)']} u.</span></div>", unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('<h3 class="section-heading" style="font-size: 18px;">Detalle por Familia</h3>', unsafe_allow_html=True)
@@ -666,7 +685,7 @@ elif pagina_actual == "Optimización y Escenarios":
     st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('<h3 class="section-heading" style="font-size: 18px;">🎛️ Simulador de Escenarios de Sensibilidad</h3>', unsafe_allow_html=True)
-    st.markdown('<p style="color: #666; font-size: 14px;">Ajuste el escenario para observar el impacto en el Valor de Retención (6m) y Operación (4s)</p>', unsafe_allow_html=True)
+    st.markdown('<p style="color: #93c5fd; font-size: 14px;">Ajuste el escenario para observar el impacto en el Valor de Retención (6m) y Operación (4s)</p>', unsafe_allow_html=True)
     
     escenario_sel = st.selectbox(
         "Seleccione el escenario:",
@@ -753,7 +772,7 @@ elif pagina_actual == "Gobierno y Procesos":
 
     with tab2:
         st.markdown('<div class="subsection-heading">Privacidad por Diseño (Ley 29733)</div>', unsafe_allow_html=True)
-        st.markdown('<p style="color: #1a1a1a; font-size: 14px;">La regla transversal del proyecto establece que <strong>ningún cliente sin <code>consentimiento_contacto = 1</code> puede ser contactado</strong>.</p>', unsafe_allow_html=True)
+        st.markdown('<p style="color: #ffffff; font-size: 14px;">La regla transversal del proyecto establece que <strong>ningún cliente sin <code style="color: #34d399;">consentimiento_contacto = 1</code> puede ser contactado</strong>.</p>', unsafe_allow_html=True)
         
         col1, col2, col3, col4 = st.columns(4)
         with col1:
@@ -783,13 +802,13 @@ elif pagina_actual == "Gobierno y Procesos":
         st.markdown("""
         🚨 <strong>Hallazgo de Gobierno:</strong> La política actual proponía contactar a <strong>50 clientes (8.3%) sin consentimiento registrado</strong>, 
         lo cual representa un riesgo de cumplimiento normativo. La solución óptima de PuLP incorpora el filtro 
-        <code>consentimiento_contacto = 1</code> desde la extracción de la cartera, garantizando <strong>100% de cumplimiento</strong>.
+        <code style="color: #34d399;">consentimiento_contacto = 1</code> desde la extracción de la cartera, garantizando <strong>100% de cumplimiento</strong>.
         """, unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
     with tab3:
         st.markdown('<div class="subsection-heading">Contrato de Datos y Linaje (8 Tablas)</div>', unsafe_allow_html=True)
-        st.markdown('<p style="color: #666; font-size: 13px;">Desplázate horizontalmente para ver todas las columnas</p>', unsafe_allow_html=True)
+        st.markdown('<p style="color: #93c5fd; font-size: 13px;">Desplázate horizontalmente para ver todas las columnas</p>', unsafe_allow_html=True)
         
         st.dataframe(
             df_contrato,
@@ -811,7 +830,7 @@ elif pagina_actual == "Gobierno y Procesos":
 # ==============================================================================
 elif pagina_actual == "Asistente Analítico":
     st.markdown('<h2 class="section-heading">Evaluación del Asistente Text-to-SQL</h2>', unsafe_allow_html=True)
-    st.markdown('<p style="color: #666; font-size: 14px;">El asistente opera en modo solo lectura con un validador de seguridad que bloquea instrucciones como <code>DROP</code>, <code>DELETE</code> o <code>UPDATE</code>.</p>', unsafe_allow_html=True)
+    st.markdown('<p style="color: #93c5fd; font-size: 14px;">El asistente opera en modo solo lectura con un validador de seguridad que bloquea instrucciones como <code style="color: #34d399;">DROP</code>, <code style="color: #34d399;">DELETE</code> o <code style="color: #34d399;">UPDATE</code>.</p>', unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     with col1:
@@ -854,7 +873,7 @@ elif pagina_actual == "Asistente Analítico":
 # ==============================================================================
 # FOOTER
 # ==============================================================================
-st.markdown('<div style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #e8e8e4; text-align: center; color: #888888; font-size: 12px;">', unsafe_allow_html=True)
+st.markdown('<div style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #334155; text-align: center; color: #93c5fd; font-size: 12px;">', unsafe_allow_html=True)
 st.markdown("""
 Desarrollado por el Equipo de Analítica Empresarial | PMD2 2026-II · TECSUP<br>
 Las cifras presentadas son el resultado de la ejecución reproducible del notebook de Colab asociado.
