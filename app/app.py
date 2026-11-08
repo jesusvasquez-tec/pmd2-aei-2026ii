@@ -14,7 +14,7 @@ st.set_page_config(
 )
 
 # ==============================================================================
-# CSS PERSONALIZADO - TODO VISIBLE Y LEGIBLE
+# CSS PERSONALIZADO - CORREGIDO PARA VISIBILIDAD
 # ==============================================================================
 st.markdown("""
 <style>
@@ -188,7 +188,7 @@ st.markdown("""
         line-height: 1.4;
     }
     
-    /* ===== CONTENIDO PRINCIPAL - TODO VISIBLE ===== */
+    /* ===== CONTENIDO PRINCIPAL ===== */
     .main-header-text {
         font-size: 11px;
         letter-spacing: 2px;
@@ -229,20 +229,20 @@ st.markdown("""
         margin-bottom: 8px;
     }
     
-    /* ===== TARJETAS KPI - FONDO CLARO CON TEXTO OSCURO ===== */
+    /* ===== TARJETAS KPI - FONDO OSCURO CON BORDE ===== */
     .kpi-card {
-        background-color: #ffffff;
-        border: 1px solid #e5e7eb;
+        background-color: #1e293b;
+        border: 1px solid #334155;
         border-radius: 12px;
         padding: 20px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
     }
     
     .kpi-label {
         font-size: 10px;
         letter-spacing: 1.5px;
         text-transform: uppercase;
-        color: #6b7280;
+        color: #93c5fd;
         font-weight: 600;
         margin-bottom: 8px;
     }
@@ -250,8 +250,15 @@ st.markdown("""
     .kpi-value {
         font-size: 32px;
         font-weight: 300;
-        color: #1a1a1a;
+        color: #ffffff;
         margin-bottom: 4px;
+        letter-spacing: -1px;
+    }
+    
+    .kpi-unit {
+        font-size: 14px;
+        color: #93c5fd;
+        font-weight: 300;
     }
     
     .kpi-delta {
@@ -260,54 +267,54 @@ st.markdown("""
     }
     
     .kpi-delta.positive {
-        color: #059669;
+        color: #34d399;
     }
     
     .kpi-delta.negative {
-        color: #dc2626;
+        color: #f87171;
     }
     
     .kpi-delta.neutral {
-        color: #6b7280;
+        color: #93c5fd;
     }
     
     /* ===== CAJAS DE INFORMACIÓN ===== */
     .info-box {
-        background-color: #eff6ff;
-        border-left: 3px solid #3b82f6;
+        background-color: #1e3a8a;
+        border-left: 3px solid #60a5fa;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #1e3a8a;
+        color: #ffffff;
         margin: 16px 0;
         font-size: 14px;
     }
     
     .success-box {
-        background-color: #f0fdf4;
-        border-left: 3px solid #059669;
+        background-color: #064e3b;
+        border-left: 3px solid #34d399;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #064e3b;
+        color: #ffffff;
         margin: 16px 0;
         font-size: 14px;
     }
     
     .warning-box {
-        background-color: #fffbeb;
-        border-left: 3px solid #d97706;
+        background-color: #78350f;
+        border-left: 3px solid #fbbf24;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #78350f;
+        color: #ffffff;
         margin: 16px 0;
         font-size: 14px;
     }
     
     .danger-box {
-        background-color: #fef2f2;
-        border-left: 3px solid #dc2626;
+        background-color: #7f1d1d;
+        border-left: 3px solid #f87171;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #7f1d1d;
+        color: #ffffff;
         margin: 16px 0;
         font-size: 14px;
     }
@@ -327,7 +334,7 @@ st.markdown("""
         border-top: 1px solid #334155;
     }
     
-    /* ===== FORZAR VISIBILIDAD DE TODOS LOS ELEMENTOS ===== */
+    /* ===== FORZAR VISIBILIDAD ===== */
     h1, h2, h3, h4, h5, h6 {
         color: #ffffff !important;
     }
@@ -365,7 +372,6 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-
 # ==============================================================================
 # DATOS MAESTROS
 # ==============================================================================
