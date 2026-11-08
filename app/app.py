@@ -14,7 +14,7 @@ st.set_page_config(
 )
 
 # ==============================================================================
-# CSS PERSONALIZADO - CONTRASTE CORREGIDO
+# CSS PERSONALIZADO - TODO VISIBLE SOBRE FONDO OSCURO
 # ==============================================================================
 st.markdown("""
 <style>
@@ -229,20 +229,20 @@ st.markdown("""
         margin-bottom: 8px;
     }
     
-    /* ===== TARJETAS KPI - FONDO CLARO CON TEXTO OSCURO ===== */
+    /* ===== TARJETAS KPI - FONDO OSCURO CON BORDE ===== */
     .kpi-card {
-        background-color: #ffffff !important;
-        border: 1px solid #e5e7eb !important;
+        background-color: #1e293b !important;
+        border: 1px solid #334155 !important;
         border-radius: 12px;
         padding: 20px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
     }
     
     .kpi-label {
         font-size: 10px;
         letter-spacing: 1.5px;
         text-transform: uppercase;
-        color: #6b7280 !important;
+        color: #93c5fd !important;
         font-weight: 600;
         margin-bottom: 8px;
     }
@@ -250,14 +250,14 @@ st.markdown("""
     .kpi-value {
         font-size: 32px;
         font-weight: 300;
-        color: #1a1a1a !important;
+        color: #ffffff !important;
         margin-bottom: 4px;
         letter-spacing: -1px;
     }
     
     .kpi-unit {
         font-size: 14px;
-        color: #6b7280 !important;
+        color: #93c5fd !important;
         font-weight: 300;
     }
     
@@ -267,54 +267,54 @@ st.markdown("""
     }
     
     .kpi-delta.positive {
-        color: #059669 !important;
+        color: #34d399 !important;
     }
     
     .kpi-delta.negative {
-        color: #dc2626 !important;
+        color: #f87171 !important;
     }
     
     .kpi-delta.neutral {
-        color: #6b7280 !important;
+        color: #93c5fd !important;
     }
     
     /* ===== CAJAS DE INFORMACIÓN ===== */
     .info-box {
-        background-color: #eff6ff !important;
-        border-left: 3px solid #3b82f6 !important;
+        background-color: #1e3a8a !important;
+        border-left: 3px solid #60a5fa !important;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #1e3a8a !important;
+        color: #ffffff !important;
         margin: 16px 0;
         font-size: 14px;
     }
     
     .success-box {
-        background-color: #f0fdf4 !important;
-        border-left: 3px solid #059669 !important;
+        background-color: #064e3b !important;
+        border-left: 3px solid #34d399 !important;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #064e3b !important;
+        color: #ffffff !important;
         margin: 16px 0;
         font-size: 14px;
     }
     
     .warning-box {
-        background-color: #fffbeb !important;
-        border-left: 3px solid #d97706 !important;
+        background-color: #78350f !important;
+        border-left: 3px solid #fbbf24 !important;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #78350f !important;
+        color: #ffffff !important;
         margin: 16px 0;
         font-size: 14px;
     }
     
     .danger-box {
-        background-color: #fef2f2 !important;
-        border-left: 3px solid #dc2626 !important;
+        background-color: #7f1d1d !important;
+        border-left: 3px solid #f87171 !important;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #7f1d1d !important;
+        color: #ffffff !important;
         margin: 16px 0;
         font-size: 14px;
     }
@@ -334,7 +334,7 @@ st.markdown("""
         border-top: 1px solid #334155;
     }
     
-    /* ===== FORZAR VISIBILIDAD DE TODOS LOS ELEMENTOS ===== */
+    /* ===== FORZAR VISIBILIDAD ===== */
     h1, h2, h3, h4, h5, h6 {
         color: #ffffff !important;
     }
