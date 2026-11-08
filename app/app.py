@@ -14,16 +14,16 @@ st.set_page_config(
 )
 
 # ==============================================================================
-# CSS PERSONALIZADO - SIDEBAR Y CONTENIDO DIFERENCIADOS
+# CSS PERSONALIZADO
 # ==============================================================================
 st.markdown("""
 <style>
-    /* ===== FONDO DEL CONTENIDO PRINCIPAL (tono slate oscuro) ===== */
+    /* ===== FONDO GENERAL ===== */
     .stApp {
         background-color: #111827 !important;
     }
     
-    /* ===== SIDEBAR (azul marino más profundo y distintivo) ===== */
+    /* ===== SIDEBAR ===== */
     [data-testid="stSidebar"] {
         background-color: #0a1929 !important;
         border-right: 2px solid #1e3a8a !important;
@@ -33,9 +33,8 @@ st.markdown("""
         background-color: #0a1929 !important;
     }
     
-    /* Logo y título del sidebar */
     .sidebar-logo {
-        color: #ffffff;
+        color: #ffffff !important;
         font-size: 26px;
         font-weight: 700;
         margin-bottom: 2px;
@@ -43,11 +42,11 @@ st.markdown("""
     }
     
     .sidebar-logo span {
-        color: #60a5fa;
+        color: #60a5fa !important;
     }
     
     .sidebar-tagline {
-        color: #93c5fd;
+        color: #93c5fd !important;
         font-size: 9px;
         letter-spacing: 3px;
         text-transform: uppercase;
@@ -56,7 +55,6 @@ st.markdown("""
         margin-bottom: 18px;
     }
     
-    /* Caja del observatorio */
     .observatory-box {
         background-color: #1e3a8a !important;
         border-radius: 10px;
@@ -76,7 +74,6 @@ st.markdown("""
         font-size: 10px;
     }
     
-    /* Títulos de sección */
     .section-title {
         color: #60a5fa !important;
         font-size: 9px;
@@ -86,7 +83,6 @@ st.markdown("""
         font-weight: 600;
     }
     
-    /* Botones de navegación */
     .nav-button {
         width: 100%;
         padding: 10px 14px;
@@ -114,7 +110,6 @@ st.markdown("""
         font-weight: 600;
     }
     
-    /* Card del modelo */
     .model-card {
         background: linear-gradient(135deg, #1e3a8a 0%, #0a1929 100%) !important;
         border-radius: 12px;
@@ -162,7 +157,6 @@ st.markdown("""
         margin-top: 8px;
     }
     
-    /* Perfil de usuario */
     .user-profile {
         display: flex;
         align-items: center;
@@ -237,49 +231,6 @@ st.markdown("""
         color: #60a5fa !important;
         font-weight: 600;
         margin-bottom: 8px;
-    }
-    
-    /* ===== TARJETAS KPI (fondo más claro para destacar sobre el contenido oscuro) ===== */
-    .kpi-card {
-        background-color: #1e293b !important;
-        border: 1px solid #334155 !important;
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-    }
-    
-    .kpi-label {
-        font-size: 10px;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        color: #60a5fa !important;
-        font-weight: 600;
-        margin-bottom: 8px;
-    }
-    
-    .kpi-value {
-        font-size: 32px;
-        font-weight: 300;
-        color: #ffffff !important;
-        margin-bottom: 4px;
-        letter-spacing: -1px;
-    }
-    
-    .kpi-delta {
-        font-size: 12px;
-        margin-top: 6px;
-    }
-    
-    .kpi-delta.positive {
-        color: #34d399 !important;
-    }
-    
-    .kpi-delta.negative {
-        color: #f87171 !important;
-    }
-    
-    .kpi-delta.neutral {
-        color: #93c5fd !important;
     }
     
     /* ===== CAJAS DE INFORMACIÓN ===== */
@@ -527,31 +478,16 @@ if pagina_actual == "Resumen":
     st.markdown('<div class="subsection-heading">Resultados de la Decisión Óptima</div>', unsafe_allow_html=True)
     st.markdown('<h2 class="section-heading">Noviembre 2026</h2>', unsafe_allow_html=True)
     
+    # Usar st.metric directamente en lugar de divs HTML
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-label">Mejora en Operación (4s)</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-value">+12.0%</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-delta positive">↑ S/ 3,594.84 adicionales</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.metric("Mejora en Operación (4s)", "+12.0%", "S/ 3,594.84 adicionales")
     with col2:
-        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-label">Contactos WhatsApp</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-value">418</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-delta negative">↑ vs 600 de la política original</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.metric("Contactos WhatsApp", "418", "vs 600 de la política original")
     with col3:
-        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-label">Unidades a Reponer</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-value">1,333</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-delta neutral">↑ Respetando tope de almacén</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.metric("Unidades a Reponer", "1,333", "Respetando tope de almacén")
     with col4:
-        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-label">Riesgo Legal</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-value">0</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-delta positive">↑ Sin consentimiento contactados</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.metric("Riesgo Legal", "0", "Sin consentimiento contactados")
 
     st.markdown('<div class="success-box">', unsafe_allow_html=True)
     st.markdown("""
@@ -612,17 +548,12 @@ elif pagina_actual == "Pronóstico de Demanda":
         st.plotly_chart(fig, use_container_width=True)
     
     with col2:
-        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-label">Unidades Totales a Reponer</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="kpi-value">{TOTAL_PRONOSTICO:,}</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.metric("Unidades Totales a Reponer", f"{TOTAL_PRONOSTICO:,}")
         
-        st.markdown('<div class="kpi-card" style="margin-top: 16px;">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-label">🏆 Familias Priorizadas</div>', unsafe_allow_html=True)
+        st.markdown('<h3 class="section-heading" style="font-size: 16px;">🏆 Familias Priorizadas</h3>', unsafe_allow_html=True)
         df_ranked = df_pronostico.sort_values("Pronóstico 4S (Und.)", ascending=False).reset_index(drop=True)
         for i, row in df_ranked.head(3).iterrows():
             st.markdown(f"<div style='padding: 8px 0; border-bottom: 1px solid #334155;'><strong style='color: #ffffff;'>{i+1}. {row['Familia']}</strong><br><span style='color: #93c5fd; font-size: 13px;'>{row['Pronóstico 4S (Und.)']} u.</span></div>", unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('<h3 class="section-heading" style="font-size: 18px;">Detalle por Familia</h3>', unsafe_allow_html=True)
     df_pronostico_display = df_pronostico.copy()
@@ -659,20 +590,11 @@ elif pagina_actual == "Optimización y Escenarios":
     
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-label">Contactos Recomendados</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="kpi-value">{datos_esc["Contactos"]:,}</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.metric("Contactos Recomendados", f"{datos_esc['Contactos']:,}")
     with col2:
-        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-label">Valor de Retención (6m)</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="kpi-value" style="font-size: 24px;">S/ {datos_esc["Retención"]:,.2f}</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.metric("Valor de Retención (6m)", f"S/ {datos_esc['Retención']:,.2f}")
     with col3:
-        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-label">Valor de Operación (4s)</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="kpi-value" style="font-size: 24px;">S/ {datos_esc["Operación"]:,.2f}</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.metric("Valor de Operación (4s)", f"S/ {datos_esc['Operación']:,.2f}")
     
     if "0%" in escenario_sel:
         st.markdown('<div class="danger-box">', unsafe_allow_html=True)
@@ -704,15 +626,9 @@ elif pagina_actual == "Gobierno y Procesos":
         
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-            st.markdown('<div class="kpi-label">Días de Monitoreo</div>', unsafe_allow_html=True)
-            st.markdown('<div class="kpi-value">1,341</div>', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.metric("Días de Monitoreo", "1,341")
         with col2:
-            st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-            st.markdown('<div class="kpi-label">Alertas Fuera de Control</div>', unsafe_allow_html=True)
-            st.markdown('<div class="kpi-value">0</div>', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.metric("Alertas Fuera de Control", "0")
         
         st.markdown('<div class="success-box">', unsafe_allow_html=True)
         st.markdown("""
@@ -735,27 +651,13 @@ elif pagina_actual == "Gobierno y Procesos":
         
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-            st.markdown('<div class="kpi-label">Clientes en Política Original</div>', unsafe_allow_html=True)
-            st.markdown('<div class="kpi-value">600</div>', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.metric("Clientes en Política Original", "600")
         with col2:
-            st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-            st.markdown('<div class="kpi-label">Sin Consentimiento (Riesgo)</div>', unsafe_allow_html=True)
-            st.markdown('<div class="kpi-value">50</div>', unsafe_allow_html=True)
-            st.markdown('<div class="kpi-delta negative">↓ -8.3%</div>', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.metric("Sin Consentimiento (Riesgo)", "50", "-8.3%")
         with col3:
-            st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-            st.markdown('<div class="kpi-label">Cartera Elegible Real</div>', unsafe_allow_html=True)
-            st.markdown('<div class="kpi-value">1,043</div>', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.metric("Cartera Elegible Real", "1,043")
         with col4:
-            st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-            st.markdown('<div class="kpi-label">Contactados por el Modelo</div>', unsafe_allow_html=True)
-            st.markdown('<div class="kpi-value">418</div>', unsafe_allow_html=True)
-            st.markdown('<div class="kpi-delta positive">↑ +100% Cumplimiento</div>', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.metric("Contactados por el Modelo", "418", "+100% Cumplimiento")
         
         st.markdown('<div class="danger-box">', unsafe_allow_html=True)
         st.markdown("""
@@ -790,17 +692,9 @@ elif pagina_actual == "Asistente Analítico":
     
     col1, col2 = st.columns(2)
     with col1:
-        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-label">Tasa de Acierto Global</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-value">95.0%</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-delta positive">↑ 19 de 20 preguntas correctas</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.metric("Tasa de Acierto Global", "95.0%", "19 de 20 preguntas correctas")
     with col2:
-        st.markdown('<div class="kpi-card">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-label">Tasa de Alucinación</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-value">5.0%</div>', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-delta negative">↑ Detectada y contenida en pregunta ambigua</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.metric("Tasa de Alucinación", "5.0%", "Detectada y contenida en pregunta ambigua")
 
     st.markdown('<h3 class="section-heading" style="font-size: 18px;">Ejemplos de Comportamiento del Asistente</h3>', unsafe_allow_html=True)
     
