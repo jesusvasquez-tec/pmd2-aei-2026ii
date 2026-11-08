@@ -14,12 +14,21 @@ st.set_page_config(
 )
 
 # ==============================================================================
-# CSS PERSONALIZADO
+# CSS PERSONALIZADO - TODO VISIBLE Y LEGIBLE
 # ==============================================================================
 st.markdown("""
 <style>
-    /* ===== SIDEBAR OSCURO ===== */
+    /* ===== FONDO GENERAL ===== */
+    .stApp {
+        background-color: #0f172a !important;
+    }
+    
+    /* ===== SIDEBAR ===== */
     [data-testid="stSidebar"] {
+        background-color: #0f172a !important;
+    }
+    
+    [data-testid="stSidebarNav"] {
         background-color: #0f172a !important;
     }
     
@@ -179,35 +188,35 @@ st.markdown("""
         line-height: 1.4;
     }
     
-    /* ===== CONTENIDO PRINCIPAL - FONDO CLARO ===== */
+    /* ===== CONTENIDO PRINCIPAL - TODO VISIBLE ===== */
     .main-header-text {
         font-size: 11px;
         letter-spacing: 2px;
         text-transform: uppercase;
-        color: #6b7280;
+        color: #93c5fd;
         font-weight: 600;
         margin-bottom: 8px;
     }
     
     .main-title {
-        font-family: Georgia, serif;
+        font-family: Georgia, 'Times New Roman', serif;
         font-size: 38px;
         font-weight: 400;
-        color: #1a1a1a;
+        color: #ffffff;
         margin-bottom: 8px;
     }
     
     .main-subtitle {
         font-size: 15px;
-        color: #6b7280;
+        color: #bfdbfe;
         margin-bottom: 28px;
     }
     
     .section-heading {
-        font-family: Georgia, serif;
+        font-family: Georgia, 'Times New Roman', serif;
         font-size: 22px;
         font-weight: 400;
-        color: #1a1a1a;
+        color: #ffffff;
         margin: 24px 0 12px;
     }
     
@@ -215,12 +224,12 @@ st.markdown("""
         font-size: 11px;
         letter-spacing: 2px;
         text-transform: uppercase;
-        color: #6b7280;
+        color: #93c5fd;
         font-weight: 600;
         margin-bottom: 8px;
     }
     
-    /* ===== KPI CARDS - FONDO BLANCO ===== */
+    /* ===== TARJETAS KPI - FONDO CLARO CON TEXTO OSCURO ===== */
     .kpi-card {
         background-color: #ffffff;
         border: 1px solid #e5e7eb;
@@ -315,7 +324,44 @@ st.markdown("""
         font-size: 12px;
         margin-top: 60px;
         padding-top: 20px;
-        border-top: 1px solid #e5e7eb;
+        border-top: 1px solid #334155;
+    }
+    
+    /* ===== FORZAR VISIBILIDAD DE TODOS LOS ELEMENTOS ===== */
+    h1, h2, h3, h4, h5, h6 {
+        color: #ffffff !important;
+    }
+    
+    p, div, span {
+        color: #ffffff;
+    }
+    
+    [data-testid="stMetricLabel"] {
+        color: #93c5fd !important;
+    }
+    
+    [data-testid="stMetricValue"] {
+        color: #ffffff !important;
+    }
+    
+    [data-testid="stMetricDelta"] {
+        color: #34d399 !important;
+    }
+    
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 24px;
+        border-bottom: 1px solid #334155;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        color: #93c5fd;
+        font-size: 14px;
+        padding: 12px 4px;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        color: #3b82f6 !important;
+        border-bottom: 2px solid #3b82f6 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -545,9 +591,12 @@ elif pagina_actual == "Pronóstico de Demanda":
             title="Pronóstico de Demanda por Familia de Producto",
             xaxis_title="Familia de Producto",
             yaxis_title="Unidades Pronosticadas",
-            template="plotly_white",
+            template="plotly_dark",
             height=400,
-            showlegend=False
+            showlegend=False,
+            plot_bgcolor='#1e293b',
+            paper_bgcolor='#0f172a',
+            font=dict(color='#ffffff', family='Georgia')
         )
         st.plotly_chart(fig, use_container_width=True)
     
@@ -561,7 +610,7 @@ elif pagina_actual == "Pronóstico de Demanda":
         st.markdown('<div class="kpi-label">🏆 Familias Priorizadas</div>', unsafe_allow_html=True)
         df_ranked = df_pronostico.sort_values("Pronóstico 4S (Und.)", ascending=False).reset_index(drop=True)
         for i, row in df_ranked.head(3).iterrows():
-            st.markdown(f"<div style='padding: 8px 0; border-bottom: 1px solid #e5e7eb;'><strong style='color: #1a1a1a;'>{i+1}. {row['Familia']}</strong><br><span style='color: #6b7280; font-size: 13px;'>{row['Pronóstico 4S (Und.)']} u.</span></div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='padding: 8px 0; border-bottom: 1px solid #334155;'><strong style='color: #ffffff;'>{i+1}. {row['Familia']}</strong><br><span style='color: #93c5fd; font-size: 13px;'>{row['Pronóstico 4S (Und.)']} u.</span></div>", unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('<h3 class="section-heading" style="font-size: 18px;">Detalle por Familia</h3>', unsafe_allow_html=True)
@@ -587,7 +636,7 @@ elif pagina_actual == "Optimización y Escenarios":
     st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('<h3 class="section-heading" style="font-size: 18px;">🎛️ Simulador de Escenarios de Sensibilidad</h3>', unsafe_allow_html=True)
-    st.markdown('<p style="color: #6b7280; font-size: 14px;">Ajuste el escenario para observar el impacto en el Valor de Retención (6m) y Operación (4s)</p>', unsafe_allow_html=True)
+    st.markdown('<p style="color: #93c5fd; font-size: 14px;">Ajuste el escenario para observar el impacto en el Valor de Retención (6m) y Operación (4s)</p>', unsafe_allow_html=True)
     
     escenario_sel = st.selectbox(
         "Seleccione el escenario:",
@@ -671,7 +720,7 @@ elif pagina_actual == "Gobierno y Procesos":
 
     with tab2:
         st.markdown('<div class="subsection-heading">Privacidad por Diseño (Ley 29733)</div>', unsafe_allow_html=True)
-        st.markdown('<p style="color: #1a1a1a; font-size: 14px;">La regla transversal del proyecto establece que <strong>ningún cliente sin <code>consentimiento_contacto = 1</code> puede ser contactado</strong>.</p>', unsafe_allow_html=True)
+        st.markdown('<p style="color: #ffffff; font-size: 14px;">La regla transversal del proyecto establece que <strong>ningún cliente sin <code style="color: #34d399;">consentimiento_contacto = 1</code> puede ser contactado</strong>.</p>', unsafe_allow_html=True)
         
         col1, col2, col3, col4 = st.columns(4)
         with col1:
@@ -701,13 +750,13 @@ elif pagina_actual == "Gobierno y Procesos":
         st.markdown("""
         🚨 <strong>Hallazgo de Gobierno:</strong> La política actual proponía contactar a <strong>50 clientes (8.3%) sin consentimiento registrado</strong>, 
         lo cual representa un riesgo de cumplimiento normativo. La solución óptima de PuLP incorpora el filtro 
-        <code>consentimiento_contacto = 1</code> desde la extracción de la cartera, garantizando <strong>100% de cumplimiento</strong>.
+        <code style="color: #34d399;">consentimiento_contacto = 1</code> desde la extracción de la cartera, garantizando <strong>100% de cumplimiento</strong>.
         """, unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
     with tab3:
         st.markdown('<div class="subsection-heading">Contrato de Datos y Linaje (8 Tablas)</div>', unsafe_allow_html=True)
-        st.markdown('<p style="color: #6b7280; font-size: 13px;">Desplázate horizontalmente para ver todas las columnas</p>', unsafe_allow_html=True)
+        st.markdown('<p style="color: #93c5fd; font-size: 13px;">Desplázate horizontalmente para ver todas las columnas</p>', unsafe_allow_html=True)
         
         st.dataframe(
             df_contrato,
@@ -726,7 +775,7 @@ elif pagina_actual == "Gobierno y Procesos":
 
 elif pagina_actual == "Asistente Analítico":
     st.markdown('<h2 class="section-heading">Evaluación del Asistente Text-to-SQL</h2>', unsafe_allow_html=True)
-    st.markdown('<p style="color: #6b7280; font-size: 14px;">El asistente opera en modo solo lectura con un validador de seguridad que bloquea instrucciones como <code>DROP</code>, <code>DELETE</code> o <code>UPDATE</code>.</p>', unsafe_allow_html=True)
+    st.markdown('<p style="color: #93c5fd; font-size: 14px;">El asistente opera en modo solo lectura con un validador de seguridad que bloquea instrucciones como <code style="color: #34d399;">DROP</code>, <code style="color: #34d399;">DELETE</code> o <code style="color: #34d399;">UPDATE</code>.</p>', unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     with col1:
