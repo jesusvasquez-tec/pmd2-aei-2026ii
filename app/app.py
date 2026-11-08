@@ -14,7 +14,7 @@ st.set_page_config(
 )
 
 # ==============================================================================
-# CSS PERSONALIZADO - TODO VISIBLE SOBRE FONDO OSCURO
+# CSS PERSONALIZADO - TARJETAS KPI CORREGIDAS
 # ==============================================================================
 st.markdown("""
 <style>
@@ -229,13 +229,13 @@ st.markdown("""
         margin-bottom: 8px;
     }
     
-    /* ===== TARJETAS KPI - FONDO OSCURO CON BORDE ===== */
+    /* ===== TARJETAS KPI - SIN FONDO DUPLICADO ===== */
     .kpi-card {
-        background-color: #1e293b !important;
-        border: 1px solid #334155 !important;
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        background-color: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
     }
     
     .kpi-label {
