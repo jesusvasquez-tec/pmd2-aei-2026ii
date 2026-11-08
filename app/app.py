@@ -14,7 +14,7 @@ st.set_page_config(
 )
 
 # ==============================================================================
-# CSS PERSONALIZADO - CORREGIDO PARA VISIBILIDAD
+# CSS PERSONALIZADO - CONTRASTE CORREGIDO
 # ==============================================================================
 st.markdown("""
 <style>
@@ -33,7 +33,7 @@ st.markdown("""
     }
     
     .sidebar-logo {
-        color: #ffffff;
+        color: #ffffff !important;
         font-size: 26px;
         font-weight: 700;
         margin-bottom: 2px;
@@ -41,11 +41,11 @@ st.markdown("""
     }
     
     .sidebar-logo span {
-        color: #3b82f6;
+        color: #3b82f6 !important;
     }
     
     .sidebar-tagline {
-        color: #93c5fd;
+        color: #93c5fd !important;
         font-size: 9px;
         letter-spacing: 3px;
         text-transform: uppercase;
@@ -55,25 +55,25 @@ st.markdown("""
     }
     
     .observatory-box {
-        background-color: #1e3a8a;
+        background-color: #1e3a8a !important;
         border-radius: 10px;
         padding: 12px 14px;
         margin: 0 14px 18px;
     }
     
     .observatory-text {
-        color: #ffffff;
+        color: #ffffff !important;
         font-size: 13px;
         font-weight: 600;
     }
     
     .observatory-sub {
-        color: #93c5fd;
+        color: #93c5fd !important;
         font-size: 10px;
     }
     
     .section-title {
-        color: #93c5fd;
+        color: #93c5fd !important;
         font-size: 9px;
         letter-spacing: 2.5px;
         text-transform: uppercase;
@@ -88,7 +88,7 @@ st.markdown("""
         border-radius: 8px;
         border: none;
         background-color: transparent;
-        color: #bfdbfe;
+        color: #bfdbfe !important;
         text-align: left;
         font-size: 14px;
         cursor: pointer;
@@ -97,17 +97,17 @@ st.markdown("""
     
     .nav-button:hover {
         background-color: #1e3a8a;
-        color: #ffffff;
+        color: #ffffff !important;
     }
     
     .nav-button.active {
-        background-color: #3b82f6;
-        color: #ffffff;
+        background-color: #3b82f6 !important;
+        color: #ffffff !important;
         font-weight: 600;
     }
     
     .model-card {
-        background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+        background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%) !important;
         border-radius: 12px;
         padding: 14px;
         margin: 18px 14px;
@@ -127,7 +127,7 @@ st.markdown("""
     }
     
     .model-label {
-        color: #60a5fa;
+        color: #60a5fa !important;
         font-size: 9px;
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -135,20 +135,20 @@ st.markdown("""
     }
     
     .model-name {
-        color: #ffffff;
+        color: #ffffff !important;
         font-size: 18px;
         font-weight: 700;
         margin-bottom: 6px;
     }
     
     .model-desc {
-        color: #bfdbfe;
+        color: #bfdbfe !important;
         font-size: 11px;
         line-height: 1.4;
     }
     
     .model-horizon {
-        color: #60a5fa;
+        color: #60a5fa !important;
         font-size: 11px;
         margin-top: 8px;
     }
@@ -177,13 +177,13 @@ st.markdown("""
     }
     
     .user-name {
-        color: #ffffff;
+        color: #ffffff !important;
         font-size: 13px;
         font-weight: 600;
     }
     
     .user-role {
-        color: #93c5fd;
+        color: #93c5fd !important;
         font-size: 10px;
         line-height: 1.4;
     }
@@ -193,7 +193,7 @@ st.markdown("""
         font-size: 11px;
         letter-spacing: 2px;
         text-transform: uppercase;
-        color: #93c5fd;
+        color: #93c5fd !important;
         font-weight: 600;
         margin-bottom: 8px;
     }
@@ -202,13 +202,13 @@ st.markdown("""
         font-family: Georgia, 'Times New Roman', serif;
         font-size: 38px;
         font-weight: 400;
-        color: #ffffff;
+        color: #ffffff !important;
         margin-bottom: 8px;
     }
     
     .main-subtitle {
         font-size: 15px;
-        color: #bfdbfe;
+        color: #bfdbfe !important;
         margin-bottom: 28px;
     }
     
@@ -216,7 +216,7 @@ st.markdown("""
         font-family: Georgia, 'Times New Roman', serif;
         font-size: 22px;
         font-weight: 400;
-        color: #ffffff;
+        color: #ffffff !important;
         margin: 24px 0 12px;
     }
     
@@ -224,25 +224,25 @@ st.markdown("""
         font-size: 11px;
         letter-spacing: 2px;
         text-transform: uppercase;
-        color: #93c5fd;
+        color: #93c5fd !important;
         font-weight: 600;
         margin-bottom: 8px;
     }
     
-    /* ===== TARJETAS KPI - FONDO OSCURO CON BORDE ===== */
+    /* ===== TARJETAS KPI - FONDO CLARO CON TEXTO OSCURO ===== */
     .kpi-card {
-        background-color: #1e293b;
-        border: 1px solid #334155;
+        background-color: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
         border-radius: 12px;
         padding: 20px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
     
     .kpi-label {
         font-size: 10px;
         letter-spacing: 1.5px;
         text-transform: uppercase;
-        color: #93c5fd;
+        color: #6b7280 !important;
         font-weight: 600;
         margin-bottom: 8px;
     }
@@ -250,14 +250,14 @@ st.markdown("""
     .kpi-value {
         font-size: 32px;
         font-weight: 300;
-        color: #ffffff;
+        color: #1a1a1a !important;
         margin-bottom: 4px;
         letter-spacing: -1px;
     }
     
     .kpi-unit {
         font-size: 14px;
-        color: #93c5fd;
+        color: #6b7280 !important;
         font-weight: 300;
     }
     
@@ -267,54 +267,54 @@ st.markdown("""
     }
     
     .kpi-delta.positive {
-        color: #34d399;
+        color: #059669 !important;
     }
     
     .kpi-delta.negative {
-        color: #f87171;
+        color: #dc2626 !important;
     }
     
     .kpi-delta.neutral {
-        color: #93c5fd;
+        color: #6b7280 !important;
     }
     
     /* ===== CAJAS DE INFORMACIÓN ===== */
     .info-box {
-        background-color: #1e3a8a;
-        border-left: 3px solid #60a5fa;
+        background-color: #eff6ff !important;
+        border-left: 3px solid #3b82f6 !important;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #ffffff;
+        color: #1e3a8a !important;
         margin: 16px 0;
         font-size: 14px;
     }
     
     .success-box {
-        background-color: #064e3b;
-        border-left: 3px solid #34d399;
+        background-color: #f0fdf4 !important;
+        border-left: 3px solid #059669 !important;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #ffffff;
+        color: #064e3b !important;
         margin: 16px 0;
         font-size: 14px;
     }
     
     .warning-box {
-        background-color: #78350f;
-        border-left: 3px solid #fbbf24;
+        background-color: #fffbeb !important;
+        border-left: 3px solid #d97706 !important;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #ffffff;
+        color: #78350f !important;
         margin: 16px 0;
         font-size: 14px;
     }
     
     .danger-box {
-        background-color: #7f1d1d;
-        border-left: 3px solid #f87171;
+        background-color: #fef2f2 !important;
+        border-left: 3px solid #dc2626 !important;
         padding: 16px 20px;
         border-radius: 0 8px 8px 0;
-        color: #ffffff;
+        color: #7f1d1d !important;
         margin: 16px 0;
         font-size: 14px;
     }
@@ -327,14 +327,14 @@ st.markdown("""
     /* ===== FOOTER ===== */
     .footer {
         text-align: center;
-        color: #9ca3af;
+        color: #9ca3af !important;
         font-size: 12px;
         margin-top: 60px;
         padding-top: 20px;
         border-top: 1px solid #334155;
     }
     
-    /* ===== FORZAR VISIBILIDAD ===== */
+    /* ===== FORZAR VISIBILIDAD DE TODOS LOS ELEMENTOS ===== */
     h1, h2, h3, h4, h5, h6 {
         color: #ffffff !important;
     }
@@ -361,7 +361,7 @@ st.markdown("""
     }
     
     .stTabs [data-baseweb="tab"] {
-        color: #93c5fd;
+        color: #93c5fd !important;
         font-size: 14px;
         padding: 12px 4px;
     }
@@ -372,6 +372,7 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
 # ==============================================================================
 # DATOS MAESTROS
 # ==============================================================================
